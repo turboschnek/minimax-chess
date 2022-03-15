@@ -4,16 +4,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
-
-//constants
+// constants
 #define POS_STRING_LEN 65
 #define MAX_INP_LEN 6
 #define INF 1000000000
 #define MAX_BORING_MOVES 100
 #define ENDGAME_THRESHOLD 15
-#define MAX_MINIMAX_DEPTH 10
-#define MINIMAX_WIN_EVAL_COEF 100000
+
 
 //functions for colored terminal output
 #define LIGHT(string) "\x1b[43m" string "\x1b[0m"
@@ -24,13 +21,11 @@
 
 
 
-
-
 /**
  * white - k = king, q = queen, r = rook, b = bishop, n = knight, p = pawn
  * black - K = king, Q = queen, R = rook, B = bishop, N = knight, P = pawn
  *
-**/
+ */
 typedef struct{
   char pieces[8][8];
   bool canWhiteCastle[2];  //two values for long and short castling (0 - long)

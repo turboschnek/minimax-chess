@@ -13,6 +13,17 @@
 
 typedef int (*Tplayer)(Tboard *b, char *, int);
 
+
+/**
+ * EXECUTES GAME LOOP -- 
+ * Asks user for players (human, random, AI) and runs game. 
+ * Prints result after game
+ * 
+ * @param void
+ * @return 0 or -1 for error
+ */
+int game(void);
+
 /**
  * Asks user for move and validates it.
  * 
@@ -101,16 +112,5 @@ void choosePlayer(Tplayer *player, const char* playerName);
  * @return 0 for draw or 1 for win of white or -1 for win of black
  */
 int gameLoop(Tboard* b, Tplayer white, Tplayer black);
-
-/**
- * EXECUTES GAME LOOP -- 
- * Asks user for players (human, random, AI) and runs game. 
- * Prints result after game
- * 
- * @param void
- * @return 0 or -1 for error
- */
-int game(void);
-
 
 #endif
