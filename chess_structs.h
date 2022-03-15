@@ -114,8 +114,22 @@ typedef struct{
  * @return pointer to initialized moveList
  */
 TmoveList* initMoveList(int size);
-void reallocMoveList(TmoveList* ml, int resultSize);
+
+/**
+ * appends move to the end of moveList
+ * 
+ * @param ml pointer to moveList
+ * @param move string (max 5+1 chars) to be appended
+ * @return void
+ */
 void appendMoveList(TmoveList* ml, char* move);
+
+/**
+ * frees moveList
+ * 
+ * @param ml pointer to moveList to be freed
+ * @return void
+ */
 void freeMoveList(TmoveList* ml);
 
 #endif

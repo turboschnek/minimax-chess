@@ -21,7 +21,7 @@ int main()
     return -1;
   }
 
-  srand(time(NULL));  //for random bot`s randomness
+  srand(time(NULL));  //for random bot's randomness
 
   return game();
 }

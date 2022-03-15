@@ -109,14 +109,6 @@ TmoveList* initMoveList(int n)
   return ml;
 }
 
-void reallocMoveList(TmoveList* ml, int n)
-{
-  ml->moves = realloc(ml->moves, n * sizeof(*ml->moves));
-  for(int i = ml->size; i < n; i++){
-    ml->moves[i] = malloc(MAX_INP_LEN * sizeof(char));
-  }
-  ml->size = n;
-}
 
 void appendMoveList(TmoveList *ml, char* move)
 {
@@ -128,7 +120,15 @@ void appendMoveList(TmoveList *ml, char* move)
     return;
   }
 
-  reallocMoveList(ml, ml->size * 2);
+  //realloc
+  int n = ml->size * 2;
+  ml->moves = realloc(ml->moves, n * sizeof(*ml->moves));
+  for(int i = ml->size; i < n; i++){
+    ml->moves[i] = malloc(MAX_INP_LEN * sizeof(char));
+  }
+  ml->size = n;
+
+
   strcpy(ml->moves[ml->filled-1], move);
 }
 
