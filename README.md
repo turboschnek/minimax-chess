@@ -1,4 +1,4 @@
-# projekt_chess
+# project_chess
 Maturitni projekt GVID
 
 Chess in terminal with simple minimax AI.
