@@ -7,13 +7,13 @@
 #ifndef __MODULE_CHESS_H
 #define __MODULE_CHESS_H
 
+#include "chess_structs.h"
+
 #include <stdio.h>
 #include <stdbool.h>
 
 
 // constants
-#define POS_STRING_LEN 65
-#define MAX_INP_LEN 6
 #define INF 1000000000
 #define MAX_BORING_MOVES 100
 #define ENDGAME_THRESHOLD 15
@@ -27,73 +27,14 @@
 #define BLACK_FOREGROUND(string) "\x1b[30m" string
 
 
-/**
- * The main structure of this module.  
- * It has all the data you will ever need for chess games
- */
-typedef struct{
 
-  // 2d arrray of pieces
-  // white - k = king, q = queen, r = rook, b = bishop, n = knight, p = pawn
-  // black - K = king, Q = queen, R = rook, B = bishop, N = knight, P = pawn
-  char pieces[8][8];
-
-  // two values for long and short castling (0 - long, 1- short)
-  bool canWhiteCastle[2];
-
-  // two values for long and short castling (0 - long, 1 - short)
-  bool canBlackCastle[2];
-  
-  // useful for "en passant"
-  char* lastMove;
-
-  // total number of moves made
-  int move;
-
-  // number of moves without take or pawn move (for draws by repetition)
-  int boringMoveCount;
-
-  // array of boring positions since last unboring move
-  // (used for draws by repetition)
-  char **boringPoss;
-  
-  //number of pieces left (for evaluating king's position)
-  int pieceCount;
-
-} Tboard;
-
-
-/**
- * dynamically allocated expandable list of moves
- */
-typedef struct{
-
-  //array of moves
-  char **moves;
-
-  //allocated number of moves
-  int size;
-
-  //filled number of moves
-  int filled;
-
-} TmoveList;
-
-
-Tboard* initBoard(void);
-Tboard* copyBoard(const Tboard *b);
 void printBoard(FILE*, const Tboard* b);
 void printBoardWithHints(FILE*, const Tboard* b, TmoveList *hints);
-void freeBoard(Tboard* b);
 char getLastMovedPiece(const Tboard* b);
 bool gotChecked(const Tboard *b, const int myKingPos[2]);
-char* boardToPosString(const Tboard *b);
 
-TmoveList* initMoveList(int size);
-void reallocMoveList(TmoveList* ml, int resultSize);
-void appendMoveList(TmoveList* ml, char* move);
-void printMoveList(const TmoveList* ml);
-void freeMoveList(TmoveList* ml);
+
+
 
 void generateAllPossibleMoves(Tboard *b, TmoveList* ml);
 void generateHints(Tboard *b, const char *input, TmoveList* ml);
