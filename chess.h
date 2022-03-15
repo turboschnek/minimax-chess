@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+
 // constants
 #define POS_STRING_LEN 65
 #define MAX_INP_LEN 6
@@ -26,31 +27,57 @@
 #define BLACK_FOREGROUND(string) "\x1b[30m" string
 
 
-
 /**
- * white - k = king, q = queen, r = rook, b = bishop, n = knight, p = pawn
- * black - K = king, Q = queen, R = rook, B = bishop, N = knight, P = pawn
- *
+ * The main structure of this module.  
+ * It has all the data you will ever need for chess games
  */
 typedef struct{
+
+  // 2d arrray of pieces
+  // white - k = king, q = queen, r = rook, b = bishop, n = knight, p = pawn
+  // black - K = king, Q = queen, R = rook, B = bishop, N = knight, P = pawn
   char pieces[8][8];
-  bool canWhiteCastle[2];  //two values for long and short castling (0 - long)
-  bool canBlackCastle[2];  //two values for long and short castling (0 - long)
-  char* lastMove;  //useful for "en passant"
-  int move;  //number of moves
-  int boringMoveCount;  //number of moves without take or pawn move (for declaring draw)
-  char **boringPoss; //buffer of boring positions since last unboring move (used for repetition)
+
+  // two values for long and short castling (0 - long, 1- short)
+  bool canWhiteCastle[2];
+
+  // two values for long and short castling (0 - long, 1 - short)
+  bool canBlackCastle[2];
+  
+  // useful for "en passant"
+  char* lastMove;
+
+  // total number of moves made
+  int move;
+
+  // number of moves without take or pawn move (for draws by repetition)
+  int boringMoveCount;
+
+  // array of boring positions since last unboring move
+  // (used for draws by repetition)
+  char **boringPoss;
+  
+  //number of pieces left (for evaluating king's position)
   int pieceCount;
+
 } Tboard;
 
+
+/**
+ * dynamically allocated expandable list of moves
+ */
 typedef struct{
+
+  //array of moves
   char **moves;
+
+  //allocated number of moves
   int size;
+
+  //filled number of moves
   int filled;
+
 } TmoveList;
-
-
-typedef int (*Tplayer)(Tboard *b, char *, int);
 
 
 Tboard* initBoard(void);
