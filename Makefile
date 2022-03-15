@@ -1,6 +1,6 @@
-# Projekt: Maturitni projekt šachy
-# Autor:   Jakub Urbanek
-# Rok:     2022
+# Project:  Maturitni projekt šachy
+# Author:   Jakub Urbanek
+# Year:     2022
 
 CC = gcc
 CFLAGS = -Wall -g -Werror=implicit-function-declaration -O3

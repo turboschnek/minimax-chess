@@ -1,3 +1,9 @@
+/**
+ * Project:  Maturitni projekt šachy
+ * Author:   Jakub Urbanek
+ * Year:     2022
+ */
+
 #include "game.h"
 #include "chess.h"
 
@@ -7,6 +13,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+
+/**
+ * constants for minimax alg
+ */
+//time limit in seconds for minimax search (AI)
+//you can change this as you wish
+#define TIME_FOR_MOVE 10
+// limit of search depth for minimax
+#define MAX_MINIMAX_DEPTH 10
+// constant for evaluation of checkmate
+#define MINIMAX_WIN_EVAL_COEF 100000
 
 
 int game(void)

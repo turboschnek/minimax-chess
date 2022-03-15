@@ -1,3 +1,9 @@
+/**
+ * Project:  Maturitni projekt šachy
+ * Author:   Jakub Urbanek
+ * Year:     2022
+ */
+
 #include "game.h"
 
 #include <math.h>

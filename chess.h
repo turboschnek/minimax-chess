@@ -1,3 +1,9 @@
+/**
+ * Project:  Maturitni projekt šachy
+ * Author:   Jakub Urbanek
+ * Year:     2022
+ */
+
 #ifndef __MODULE_CHESS_H
 #define __MODULE_CHESS_H
 

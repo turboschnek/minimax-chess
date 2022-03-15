@@ -1,3 +1,9 @@
+/**
+ * Project:  Maturitni projekt šachy
+ * Author:   Jakub Urbanek
+ * Year:     2022
+ */
+
 #ifndef __MODULE_GAME_H
 #define __MODULE_GAME_H
 
@@ -6,11 +12,12 @@
 #include <stdbool.h>
 
 
-#define TIME_FOR_MOVE 10
-#define MAX_MINIMAX_DEPTH 10
-#define MINIMAX_WIN_EVAL_COEF 100000
-
-
+/**
+ * ussage: \n
+ * Tplayer my_player; choosePlayer(&my_player, ...);
+ * 
+ * @return 0 or depth of search when player is minimax
+ */
 typedef int (*Tplayer)(Tboard *b, char *, int);
 
 
