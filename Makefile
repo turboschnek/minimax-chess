@@ -3,11 +3,11 @@
 # Year:     2022
 
 CC = gcc
-CFLAGS = -Wall -g -Werror=implicit-function-declaration -O3
+CFLAGS = -Wall -g -O3
 LIBS= -lm
 
 
-OBJFILES= main.o game.o chess.o
+OBJFILES= main.o game.o chess.o chess_structs.o
 
 
 BINDIR= bin
