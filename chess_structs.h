@@ -51,6 +51,46 @@ typedef struct{
 
 
 /**
+ * initializes board datastructure
+ * 
+ * @param void
+ * @return pointer to allocated board
+ * @note board is set to starting position
+ */
+Tboard* initBoard(void);
+
+/**
+ * copies board datastructure
+ * 
+ * @param b pointer to board to be copied
+ * @return pointer to copy of b
+ */
+Tboard* copyBoard(const Tboard *b);
+
+/**
+ * returns posString of current possition
+ * 
+ * @param b pointer to board
+ * @returns string with len 65 representing current position
+ * @note posString of srarting position:  
+ * "RNBQKBNRPPPPPPPP                                pppppppprnbqkbnr"
+ */
+char* boardToPosString(const Tboard *b);
+
+/**
+ * frees board
+ * 
+ * @param b pointer to board to be freed
+ * @return void
+ */
+void freeBoard(Tboard* b);
+
+
+
+
+
+
+/**
  * dynamically allocated expandable list of moves
  */
 typedef struct{
@@ -66,12 +106,13 @@ typedef struct{
 
 } TmoveList;
 
-Tboard* initBoard(void);
-Tboard* copyBoard(const Tboard *b);
-char* boardToPosString(const Tboard *b);
-void freeBoard(Tboard* b);
 
-
+/**
+ * initializes TmoveList
+ * 
+ * @param size initial size of list (meaning count of moves to fill it)
+ * @return pointer to initialized moveList
+ */
 TmoveList* initMoveList(int size);
 void reallocMoveList(TmoveList* ml, int resultSize);
 void appendMoveList(TmoveList* ml, char* move);

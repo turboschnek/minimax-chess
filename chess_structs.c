@@ -81,8 +81,7 @@ void freeBoard(Tboard* b)
   free(b);
 }
 
-//posString of srarting position:
-//RNBQKBNRPPPPPPPP                                pppppppprnbqkbnr
+
 char* boardToPosString(const Tboard *b)
 {
   char *posString = malloc(POS_STRING_LEN * sizeof(char));
