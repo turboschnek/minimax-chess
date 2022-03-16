@@ -34,7 +34,7 @@ int getPieceValue(char piece, int row, int col, int pieceCount)
     if(pieceCount > ENDGAME_THRESHOLD){
       if(row == 7)
         temp = 1;
-      return (temp * abs(35 - (col*10))) / 2;
+      return -(temp * abs(35 - (col*10))) / 2;
     }
     return ((abs(35 - (col*10)) + abs(35 - (row*10))) / 2);
   case 'K':
@@ -43,7 +43,7 @@ int getPieceValue(char piece, int row, int col, int pieceCount)
         temp = 1;
       return -(temp * abs(35 - (col*10))) / 2;
     }
-    return -((abs(35 - (col*10)) + abs(35 - (row*10))) / 2);
+    return ((abs(35 - (col*10)) + abs(35 - (row*10))) / 2);
 
   case 'q':
     return 900;
