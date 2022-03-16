@@ -4,7 +4,7 @@
  * Year:     2022
  */
 
-#include "chess.h"
+#include "chess_logic.h"
 #include "chess_structs.h"
 
 #include <math.h>

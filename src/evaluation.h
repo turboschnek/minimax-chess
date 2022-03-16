@@ -7,7 +7,7 @@
 #ifndef __MODULE_EVALUATION_H
 #define __MODULE_EVALUATION_H
 
-#include "chess.h"
+#include "chess_logic.h"
 
 #define ENDGAME_THRESHOLD 15
 

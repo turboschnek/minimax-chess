@@ -5,7 +5,7 @@
  */
 
 #include "evaluation.h"
-#include "chess.h"
+#include "chess_logic.h"
 
 #include <stdlib.h>
 

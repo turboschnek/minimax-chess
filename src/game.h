@@ -7,8 +7,8 @@
 #ifndef __MODULE_GAME_H
 #define __MODULE_GAME_H
 
-#include "chess.h"
-#include "evaluation.h"
+#include "chess_logic.h"
+
 
 #include <stdbool.h>
 

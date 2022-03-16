@@ -7,7 +7,7 @@ CFLAGS = -Wall -g -O3
 LIBS= -lm
 
 
-OBJFILES= main.o game.o evaluation.o chess.o chess_structs.o
+OBJFILES= main.o game.o evaluation.o chess_logic.o chess_structs.o
 
 SRCDIR= src
 BINDIR= bin

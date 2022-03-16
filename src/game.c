@@ -5,7 +5,8 @@
  */
 
 #include "game.h"
-#include "chess.h"
+#include "chess_logic.h"
+#include "evaluation.h"
 
 #include <stdio.h>
 #include <stdbool.h>
