@@ -40,9 +40,6 @@ bool gotChecked(const Tboard *b, const int myKingPos[2]);
 int getResult(Tboard *b);
 int getResultFaster(Tboard *b, TmoveList *ml);
 bool isInputValid(const char* input, Tboard* b);
-bool isInputHintable(const char* input);
-bool isMoveValid(const char* input, Tboard* b);
-void toUpper(char*);
 
 void moveBoard(const char* input, Tboard* b);
 bool isEnPassant(const char* input, const Tboard* b);

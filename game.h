@@ -145,4 +145,12 @@ int getMin(int a, int b);
  */
 void insertSort(TmoveList *ml, int *keys, bool increasing);
 
+
+/**
+ * 
+ */
+void toUpper(char*);
+
+bool isInputHintable(const char* input);
+
 #endif

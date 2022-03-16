@@ -1086,34 +1086,6 @@ bool isInputValid(const char *input, Tboard *b)
   return false;
 }
 
-bool isMoveValid(const char *input, Tboard *b)
-{
-  if(!isItsMove(b->move, b->pieces['8' - input[1]][input[0] - 'A'])){
-    return false;
-  }
-
-  TmoveList *moveList = initMoveList(16);
-  generateAllPossibleMoves(b, moveList);
-
-  for(int i = 0; i < moveList->filled; i++){
-    if(strcmp(moveList->moves[i], input) == 0){
-      freeMoveList(moveList);
-      return true;
-    }
-  }
-
-  freeMoveList(moveList);
-  return false;
-}
-
-bool isInputHintable(const char* input)
-{
-  if(strlen(input) >= 2)
-    return (input[0] >= 'A' && input[0] <= 'H' &&
-            input[1] >= '1' && input[1] <= '8');
-  return false;
-}
-
 char* getPieceGraphics(char piece)
 {
   switch(piece)
@@ -1147,16 +1119,6 @@ char* getPieceGraphics(char piece)
   }
 }
 
-
-void toUpper(char* s)
-{
-  int len = strlen(s);
-  for(int i = 0; i < len; i++){
-    if(isLower(s[i])){
-      s[i] = s[i] + ('A' - 'a');
-    }
-  }
-}
 
 bool isOnBoard(const int vector[2]){
   return (vector[0] >= 0 && vector[0] < 8 && vector[1] >= 0 && vector[1] < 8);

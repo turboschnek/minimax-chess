@@ -419,3 +419,20 @@ void insertSort(TmoveList *ml, int *keys, bool increasing)
   }
 }
 
+void toUpper(char* s)
+{
+  int len = strlen(s);
+  for(int i = 0; i < len; i++){
+    if(isLower(s[i])){
+      s[i] = s[i] + ('A' - 'a');
+    }
+  }
+}
+
+bool isInputHintable(const char* input)
+{
+  if(strlen(input) >= 2)
+    return (input[0] >= 'A' && input[0] <= 'H' &&
+            input[1] >= '1' && input[1] <= '8');
+  return false;
+}
