@@ -23,7 +23,7 @@ typedef int (*Tplayer)(Tboard *b, char *, int);
 
 
 /**
- * EXECUTES GAME LOOP -- 
+ * EXECUTES GAME -- 
  * Asks user for players (human, random, AI) and runs game. 
  * Prints result after game
  * 
@@ -31,6 +31,29 @@ typedef int (*Tplayer)(Tboard *b, char *, int);
  * @return 0 or -1 for error
  */
 int game(void);
+
+/**
+ * Lets user choose player (shows possibilities and waits for numerical input).
+ * Chosen player function is saved to parameter *player
+ *
+ * @param player pointer to Tplayer to be chosen
+ * @param playerName string displayed to user(usually "white" or "black")
+ * 
+ * @return void
+ * @note voulnerable to buffer overflow
+ */
+void choosePlayer(Tplayer *player, const char* playerName);
+
+/**
+ * Runs gameloop until end of game
+ * 
+ * @param b initialized board (remains constant),
+ * @param white pointer to player function for white
+ * @param black pointer to player function for black
+ * 
+ * @return 0 for draw or 1 for win of white or -1 for win of black
+ */
+int gameLoop(Tboard* b, Tplayer white, Tplayer black);
 
 /**
  * Asks user for move and validates it.
@@ -99,26 +122,27 @@ long countMoves(Tboard *b, int depth);
 int minimax(Tboard *b, int depth, bool isMax, int alfa, int beta);
 
 /**
- * Lets user choose player (shows possibilities and waits for numerical input).
- * Chosen player function is saved to parameter *player
- *
- * @param player pointer to Tplayer to be chosen
- * @param playerName string displayed to user(usually "white" or "black")
- * 
- * @return void
- * @note voulnerable to buffer overflow
+ * returns bigger integer from parameters
+ * @note if a==b returns b
  */
-void choosePlayer(Tplayer *player, const char* playerName);
+int getMax(int a, int b);
 
 /**
- * Runs gameloop until end of game
+ * returns smaller integer from parameters
  * 
- * @param b initialized board (remains constant),
- * @param white pointer to player function for white
- * @param black pointer to player function for black
- * 
- * @return 0 for draw or 1 for win of white or -1 for win of black
+ * @note if a==b returns a
  */
-int gameLoop(Tboard* b, Tplayer white, Tplayer black);
+int getMin(int a, int b);
+
+/**
+ * sorts movelist using keys
+ * 
+ * @param ml pointer to movelist to be sorted
+ * @param keys array of evaluations of moves
+ * @param increasing sets whether the sorted data has to be in increasing order
+ * 
+ * @note keys and ml must be the same length!
+ */
+void insertSort(TmoveList *ml, int *keys, bool increasing);
 
 #endif

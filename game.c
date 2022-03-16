@@ -377,3 +377,45 @@ int minimax(Tboard *b, int depth, bool isMax, int alfa, int beta)
   }
 }
 
+int getMax(int a, int b)
+{
+  if(a > b) return a;
+  return b;
+}
+
+int getMin(int a, int b)
+{
+  if(a > b) return b;
+  return a;
+}
+
+void insertSort(TmoveList *ml, int *keys, bool increasing)
+{
+  if(increasing){
+    for(int i = 1; i < ml->filled; i++){
+      int j, tempKey = keys[i];
+      char *tempMove = ml->moves[i];
+
+      for(j = i-1; (j >= 0 && keys[j] > tempKey); j--){
+        ml->moves[j+1] = ml->moves[j];
+        keys[j+1] = keys[j];
+      }
+      ml->moves[j+1] = tempMove;
+      keys[j+1] = tempKey;
+    }
+  } else {
+    for(int i = 1; i < ml->filled; i++){
+      int j, tempKey = keys[i];
+      char *tempMove = ml->moves[i];
+
+      //keys[j] <= tempKey   would be stable, but slower
+      for(j = i-1; (j >= 0 && keys[j] < tempKey); j--){
+        ml->moves[j+1] = ml->moves[j];
+        keys[j+1] = keys[j];
+      }
+      ml->moves[j+1] = tempMove;
+      keys[j+1] = tempKey;
+    }
+  }
+}
+
