@@ -16,7 +16,7 @@
 
 int main()
 {
-  if(system("@cls||clear") != 0){
+  if(system("clear") != 0){
     fprintf(stderr, "unable to clear screen");
     return -1;
   }

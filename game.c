@@ -32,9 +32,9 @@ int game(void)
   Tplayer white;
   Tplayer black;
   choosePlayer(&white, "white");
-  system("@cls||clear");
+  system("clear");
   choosePlayer(&black, "black");
-  system("@cls||clear");
+  system("clear");
 
 
   Tboard *b = initBoard();
@@ -84,7 +84,7 @@ void choosePlayer(Tplayer *player, const char* playerName)
     *player = &minimaxBotGetMove;
     break;
   default:
-    system("@cls||clear");
+    system("clear");
     printf("invalid choice\n");
     choosePlayer(player, playerName);
     break;
@@ -109,7 +109,7 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black)
 
       moveBoard(moveBuffer, b);
 
-      system("@cls||clear");
+      system("clear");
       printf("Black to move:\nstatic eval: %d\
              \nmoves: %d\nlastMove/depth/time: %s/%d/%ld\n",
              evaluateBoard(b), b->move, b->lastMove, depth, seconds);
@@ -125,7 +125,7 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black)
 
       moveBoard(moveBuffer, b);
 
-      system("@cls||clear");
+      system("clear");
       printf("White to move:\nstatic eval: %d\
              \nmoves: %d\nlastMove/depth/time: %s/%d/%ld\n",
              evaluateBoard(b), b->move, b->lastMove, depth, seconds);
@@ -255,7 +255,7 @@ int humanGetMove(Tboard *b, char *input, int _)
         TmoveList* hints = initMoveList(2);
         generateHints(b, input, hints);
 
-        system("@cls||clear");
+        system("clear");
         printf("!INVALID MOVE!\nstatic eval: %d\
                \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
                evaluateBoard(b), b->move, b->lastMove);
@@ -263,7 +263,7 @@ int humanGetMove(Tboard *b, char *input, int _)
 
         freeMoveList(hints);
       } else {
-        system("@cls||clear");
+        system("clear");
         printf("!INVALID MOVE!\nstatic eval: %d\
                \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
                evaluateBoard(b), b->move, b->lastMove);
@@ -271,7 +271,7 @@ int humanGetMove(Tboard *b, char *input, int _)
       }
     }
     else {
-      system("@cls||clear");
+      system("clear");
       printf("!INVALID MOVE!\nstatic eval: %d\
              \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
              evaluateBoard(b), b->move, b->lastMove);
