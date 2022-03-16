@@ -267,8 +267,6 @@ int getResult(Tboard *b)
 
 void generateAllPossibleMoves(Tboard * b, TmoveList *ml)
 {
-  if(b->boringMoveCount >= MAX_BORING_MOVES) return;
-
   char color;
   if(b->move % 2 == 0) color = 'a';
   else color = 'A';

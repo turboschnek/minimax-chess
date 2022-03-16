@@ -15,26 +15,6 @@
 #include <math.h>
 
 
-/**
- * constants for minimax alg
- */
-//time limit in seconds for minimax search (AI)
-//you can change this as you wish
-#define TIME_FOR_MOVE 10
-// limit of search depth for minimax
-#define MAX_MINIMAX_DEPTH 10
-
-/**
- * constant for evaluation of checkmate
- * 
- * following must be true:
- *    (max value of evaluateBoard() <
- *    MINIMAX_WIN_EVAL_COEF <
- *    INF/(MAX_MINIMAX_DEPTH-1))
- */
-#define MINIMAX_WIN_EVAL_COEF 100000
-
-
 int game(void)
 {
   Tplayer white;
