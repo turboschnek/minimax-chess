@@ -31,9 +31,6 @@ const int bishopMoveVectors[4][2] = {
 };
 
 
-
-
-
 void printBoard(FILE* file, const Tboard *b)
 {
   TmoveList *emptyML = initMoveList(0);
@@ -93,8 +90,6 @@ void printBoardWithHints(FILE* file, const Tboard *b, TmoveList *hints)
   }
   free(hintIndex);
 }
-
-
 
 
 void moveBoard(const char *input, Tboard *b)
@@ -228,6 +223,7 @@ int getResultFaster(Tboard *b, TmoveList *ml)
   return 2;  // not stopped
 }
 
+
 int getResult(Tboard *b)
 {
   char *temp = boardToPosString(b);
@@ -311,6 +307,7 @@ void generateAllPossibleMoves(Tboard * b, TmoveList *ml)
   }
 }
 
+
 void generateHints(Tboard *b, const char *input, TmoveList* ml)
 {
   TmoveList *temp = initMoveList(8);
@@ -323,10 +320,12 @@ void generateHints(Tboard *b, const char *input, TmoveList* ml)
   freeMoveList(temp);
 }
 
+
 char getLastMovedPiece(const Tboard* b)
 {
   return b->pieces['8' - b->lastMove[3]][b->lastMove[2] - 'A'];
 }
+
 
 void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
 {
@@ -796,6 +795,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
   }
 }
 
+
 bool isEnPassant(const char* input, const Tboard* b)
 {
   // returns true if move is diagonally by pawn and lands on empty square
@@ -804,6 +804,7 @@ bool isEnPassant(const char* input, const Tboard* b)
           (b->pieces['8' - input[3]][input[2]-'A'] == ' ' &&
            input[0] != input[2]));
 }
+
 
 bool isEnPassantLegal(const Tboard* b,
                       const int pos[2],
@@ -853,6 +854,7 @@ bool isEnPassantLegal(const Tboard* b,
   return true;
 }
 
+
 bool doesMoveBlockCheck(const Tboard* b,
                         const char *move,
                         const int kingPos[2])
@@ -875,6 +877,7 @@ bool doesMoveBlockCheck(const Tboard* b,
   freeBoard(copy);
   return true;
 }
+
 
 bool gotChecked(const Tboard *b, const int myKingPos[2])
 {
@@ -1068,6 +1071,7 @@ bool gotChecked(const Tboard *b, const int myKingPos[2])
   return false;
 }
 
+
 bool isInputValid(const char *input, Tboard *b)
 {
   TmoveList *moveList = initMoveList(16);
@@ -1083,6 +1087,7 @@ bool isInputValid(const char *input, Tboard *b)
   freeMoveList(moveList);
   return false;
 }
+
 
 char* getPieceGraphics(char piece)
 {
@@ -1122,6 +1127,7 @@ bool isOnBoard(const int vector[2]){
   return (vector[0] >= 0 && vector[0] < 8 && vector[1] >= 0 && vector[1] < 8);
 }
 
+
 bool isKingMovePossible(const Tboard* b,
                         const char color,
                         const int origin[2],
@@ -1134,6 +1140,7 @@ bool isKingMovePossible(const Tboard* b,
   }
   return false;
 }
+
 
 bool isKnightMovePossible(const Tboard* b,
                          const char color,
@@ -1149,6 +1156,7 @@ bool isKnightMovePossible(const Tboard* b,
   return false;
 }
 
+
 bool isMoveClean(const Tboard* b,
                  const int pos[2],
                  const int moveVector[2],
@@ -1160,6 +1168,7 @@ bool isMoveClean(const Tboard* b,
             fitsRestriction(moveVector, restriction));
   return false;
 }
+
 
 bool isMoveTake(const Tboard* b,
                 const char opponentColor,
@@ -1177,11 +1186,13 @@ bool isMoveTake(const Tboard* b,
   return false;
 }
 
+
 bool isItsMove(const int moveNumber, const char piece)
 {
   return ((moveNumber%2 == 0 && isLower(piece)) ||
           (moveNumber%2 == 1 && isUpper(piece)));
 }
+
 
 bool isBlockingCheck(const Tboard* b,
                      const char oppColor,
@@ -1247,6 +1258,7 @@ bool isBlockingCheck(const Tboard* b,
   return false;
 }
 
+
 void getPieceLocation(const Tboard* b, const char piece, int returnedPos[2])
 {
   for(int i = 0; i < 8; i++){
@@ -1262,6 +1274,7 @@ void getPieceLocation(const Tboard* b, const char piece, int returnedPos[2])
   returnedPos[1] = -1;
   return;
 }
+
 
 bool fitsRestriction(const int moveVector[2], int restriction)
 {
@@ -1424,6 +1437,7 @@ bool isAttacked(const Tboard *b, const char oppColor, const int dest[2])
   return false;
 }
 
+
 bool willBeAttacked(const Tboard *b,
                     const char color,
                     const int origin[2],
@@ -1442,6 +1456,7 @@ bool willBeAttacked(const Tboard *b,
   }
 }
 
+
 void disableCastling(Tboard *b, char color, bool buffer[2])
 {
   if(color == 'a'){
@@ -1455,6 +1470,7 @@ void disableCastling(Tboard *b, char color, bool buffer[2])
   }
 }
 
+
 void regainCastling(Tboard *b, char color, bool buffer[2])
 {
   if(color == 'a'){
@@ -1466,25 +1482,30 @@ void regainCastling(Tboard *b, char color, bool buffer[2])
   }
 }
 
+
 char oppositeColor(const char color)
 {
   return (color + 2*((('a'+'A')/2)-color));
 }
+
 
 bool isColor(const char color, const char piece)
 {
   return (piece >= color && piece <= color + 32);
 }
 
+
 bool isUpper(const char piece)
 {
   return (piece >= 'A' && piece <= 'Z');
 }
 
+
 bool isLower(const char piece)
 {
   return (piece >= 'a' && piece <= 'z');
 }
+
 
 void normalize(int moveVector[2])
 {
@@ -1493,6 +1514,7 @@ void normalize(int moveVector[2])
       moveVector[i] = moveVector[i]/abs(moveVector[i]);
   }
 }
+
 
 bool isArrayInArrayOfArrays(int *array,
                             int **arrayOfArrays,
@@ -1509,6 +1531,7 @@ bool isArrayInArrayOfArrays(int *array,
 
   return false;
 }
+
 
 bool isStringTwiceInArrayOfStrings(char *array,
                                    char **arrayOfArrays,
@@ -1528,6 +1551,7 @@ bool isStringTwiceInArrayOfStrings(char *array,
   return false;
 }
 
+
 void freeArrayOfStrings(char **arr, int len)
 {
   for(int i = 0; i < len; i++){
@@ -1535,4 +1559,3 @@ void freeArrayOfStrings(char **arr, int len)
   }
   free(arr);
 }
-
