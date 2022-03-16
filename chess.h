@@ -16,7 +16,7 @@
 // constants
 #define INF 1000000000
 #define MAX_BORING_MOVES 100
-#define ENDGAME_THRESHOLD 15
+
 
 
 //functions for colored terminal output
@@ -40,8 +40,6 @@ void generateAllPossibleMoves(Tboard *b, TmoveList* ml);
 void generateHints(Tboard *b, const char *input, TmoveList* ml);
 
 char* getPieceGraphics(char piece);
-int getPieceValue(char piece, int row, int col, int pieceCount);
-int evaluateBoard(const Tboard* b);
 int getResult(Tboard *b);
 int getResultFaster(Tboard *b, TmoveList *ml);
 bool isInputValid(const char* input, Tboard* b);

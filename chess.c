@@ -1106,19 +1106,6 @@ bool isMoveValid(const char *input, Tboard *b)
   return false;
 }
 
-int evaluateBoard(const Tboard *b)
-{
-  if (b->boringMoveCount >= MAX_BORING_MOVES) return 0;
-
-  int sum = 0;
-  for(int i = 0; i < 8; i++){
-    for(int j = 0; j < 8; j++){
-      sum += getPieceValue(b->pieces[i][j], i, j, b->pieceCount);
-    }
-  }
-  return sum;
-}
-
 bool isInputHintable(const char* input)
 {
   if(strlen(input) >= 2)
@@ -1160,53 +1147,6 @@ char* getPieceGraphics(char piece)
   }
 }
 
-
-int getPieceValue(char piece, int row, int col, int pieceCount)
-{
-  int temp = 0;
-  switch(piece)
-  {
-  case 'k':
-    if(pieceCount > ENDGAME_THRESHOLD){
-      if(row == 7)
-        temp = 1;
-      return (temp * abs(35 - (col*10))) / 2;
-    }
-    return -((abs(35 - (col*10)) + abs(35 - (row*10))) / 2);
-  case 'K':
-    if(pieceCount > ENDGAME_THRESHOLD){
-      if(row == 0)
-        temp = 1;
-      return -(temp * abs(35 - (col*10))) / 2;
-    }
-    return ((abs(35 - (col*10)) + abs(35 - (row*10))) / 2);
-
-  case 'q':
-    return 900;
-  case 'Q':
-    return -900;
-  case 'b':
-    return 300;
-  case 'B':
-    return -300;
-  case 'n':
-    // forces knights to be in the middle, where it is ideal for them
-    return 300 - ((abs(35 - (col*10)) + abs(35 - (row*10))) / 10);
-  case 'N':
-    return -(300 - ((abs(35 - (col*10)) + abs(35 - (row*10))) / 10));
-  case 'r':
-    return 500;
-  case 'R':
-    return -500;
-  case 'p':
-    // pawns are most valuable in middle cols and near promotion
-    return 100 + (7-row) - (abs(35 - (col*10)) / 10);
-  case 'P':
-    return -(100 + row - (abs(35 - (col*10)) / 10));
-  default:
-    return 0;
-  }
-}
 
 void toUpper(char* s)
 {

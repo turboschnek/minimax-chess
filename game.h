@@ -8,6 +8,7 @@
 #define __MODULE_GAME_H
 
 #include "chess.h"
+#include "evaluation.h"
 
 #include <stdbool.h>
 
