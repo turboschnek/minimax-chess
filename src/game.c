@@ -18,12 +18,20 @@
 
 int game(void)
 {
+  int timeBudget = 0;
+  
   Tplayer white;
   Tplayer black;
   choosePlayer(&white, "white");
   system("clear");
   choosePlayer(&black, "black");
   system("clear");
+
+  
+  if(black == minimaxBotGetMove || white == minimaxBotGetMove){
+    printf("Enter time limit for minimax bot's move (in seconds):\n");
+    scanf("%d", &timeBudget);
+  }
 
 
   Tboard *b = initBoard();
@@ -32,7 +40,7 @@ int game(void)
 
   int result = 2;
 
-  result = gameLoop(b, white, black);
+  result = gameLoop(b, white, black, timeBudget);
 
   freeBoard(b);
 
@@ -81,12 +89,17 @@ void choosePlayer(Tplayer *player, const char* playerName)
 }
 
 
-int gameLoop(Tboard* b, Tplayer white, Tplayer black)
+int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
 {
+  if(timeBudget < 1){
+    timeBudget = DEFAULT_TIME_FOR_MOVE;
+  }
+
+
   FILE *gameSave = fopen("game_save.txt", "w");
   fprintf(gameSave, "1\n1\n");
   char *moveBuffer = malloc(MAX_INP_LEN * sizeof(char));
-  int result = 2, timeBudget = TIME_FOR_MOVE;
+  int result = 2;
   while(result == 2)
   {
     if(b->move%2 == 0){

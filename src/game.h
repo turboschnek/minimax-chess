@@ -16,11 +16,11 @@
  * constants for minimax alg
  */
 
-//time limit in seconds for minimax search (AI)
-//you can change this as you wish
-#define TIME_FOR_MOVE 10
+//default time limit in seconds for minimax search (AI)
+//it is used when gameLoop() gets invalid timeBudget
+#define DEFAULT_TIME_FOR_MOVE 10
 // limit of search depth for minimax
-#define MAX_MINIMAX_DEPTH 12
+#define MAX_MINIMAX_DEPTH 20
 /**
  * constant for evaluation of checkmate
  * 
@@ -33,7 +33,7 @@
 
 
 /**
- * ussage: \n
+ * ussage:  
  * Tplayer my_player; choosePlayer(&my_player, ...);
  * 
  * @return 0 or depth of search when player is minimax
@@ -69,10 +69,11 @@ void choosePlayer(Tplayer *player, const char* playerName);
  * @param b initialized board (remains constant),
  * @param white pointer to player function for white
  * @param black pointer to player function for black
+ * @param timeBudget time in seconds allowed for minimax's move
  * 
  * @return 0 for draw or 1 for win of white or -1 for win of black
  */
-int gameLoop(Tboard* b, Tplayer white, Tplayer black);
+int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget);
 
 /**
  * Asks user for move and validates it.
