@@ -18,7 +18,7 @@
 
 int game(void)
 {
-  int timeBudget = 0;
+  int timeBudget = DEFAULT_TIME_FOR_MOVE;
   
   Tplayer white;
   Tplayer black;
