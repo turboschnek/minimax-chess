@@ -31,6 +31,7 @@ int game(void)
   if(black == minimaxBotGetMove || white == minimaxBotGetMove){
     printf("Enter time limit for minimax bot's move (in seconds):\n");
     scanf("%d", &timeBudget);
+    system("clear");
   }
 
 
