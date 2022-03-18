@@ -155,7 +155,7 @@ void moveBoard(const char *input, Tboard *b)
       b->pieces[from[1]][from[0]] == 'P'))
   {
     if(input[4] == '\0') {
-      b->pieces[from[1]][from[0]] = b->pieces[from[1]][from[0]] + ('p'-'q');
+      b->pieces[from[1]][from[0]] = b->pieces[from[1]][from[0]] + ('q'-'p');
     } else {
       b->pieces[from[1]][from[0]] = input[4] + (((b->move+1) % 2) * ('a' - 'A'));
     }

@@ -12,8 +12,9 @@ OBJFILES= main.o game.o evaluation.o chess_logic.o chess_structs.o
 SRCDIR= src
 BINDIR= bin
 BINNAME= chess
-TESTDIR= tests
-V-TEST-IPNUTS= valgrind_test_in.txt
+
+
+TESTDIR= test_scenarios
 
 default: build clean
 
@@ -37,4 +38,4 @@ clean:
 
 valgrind-test:
 	cd bin; \
-	valgrind ./chess < ../$(TESTDIR)/$(V-TEST-IPNUTS)
+	valgrind ./chess -d < ../$(TESTDIR)/valgrind_test_in.txt

@@ -15,10 +15,13 @@
 #include <string.h>
 #include <math.h>
 
+//clearScreen() clears screen only if this variable is true 
+bool isClearScreenActive = true;
+
 
 int game(void)
 {
-  int timeBudget = DEFAULT_TIME_FOR_MOVE;
+  int timeBudget = 0;
   
   Tplayer white;
   Tplayer black;
@@ -58,7 +61,7 @@ int game(void)
     break;
 
   default:
-    return -1;
+    return 1;
   }
 
   return 0;
@@ -442,10 +445,18 @@ void scanTimeBudget(int *timeBudget)
   }
 }
 
-int clearScreen()
+int clearScreen(void)
 {
-  if(system("clear")){
-    return 0;
+  if(isClearScreenActive){
+    if(system("clear")){
+      return 0;
+    }
+    return 1;
   }
-  return 1;
+  return 0;
+}
+
+void setIsClearScreenActive(bool isIt)
+{
+  isClearScreenActive = isIt;
 }

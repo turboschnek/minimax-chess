@@ -15,10 +15,6 @@
 /**
  * constants for minimax alg
  */
-
-//default time limit in seconds for minimax search (AI)
-//it is used when gameLoop() gets invalid timeBudget
-#define DEFAULT_TIME_FOR_MOVE 10
 // limit of search depth for minimax
 #define MAX_MINIMAX_DEPTH 20
 /**
@@ -47,7 +43,7 @@ typedef int (*Tplayer)(Tboard *b, char *, int);
  * Prints result after game
  * 
  * @param void
- * @return 0 or -1 for error
+ * @return 0 or 1 for error
  */
 int game(void);
 
@@ -187,8 +183,14 @@ bool isInputHintable(const char* input);
 
 
 /**
- * clears terminal
+ * sets isClearScreenActive to isIt
+ */
+void setIsClearScreenActive(bool isIt);
+
+/**
+ * clears terminal if isClearScreenActive is set to true (it is by default)
  * @return 0 if OK, 1 if failed
+ * @note to change value of isClearScreenActive use fun setIsClearScreenActive
  */
 int clearScreen(void);
 
