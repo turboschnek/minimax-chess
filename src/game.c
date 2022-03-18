@@ -29,8 +29,7 @@ int game(void)
 
   
   if(black == minimaxBotGetMove || white == minimaxBotGetMove){
-    printf("Enter time limit for minimax bot's move (in seconds):\n");
-    scanf("%d", &timeBudget);
+    scanTimeBudget(&timeBudget);
     system("clear");
   }
 
@@ -92,8 +91,8 @@ void choosePlayer(Tplayer *player, const char* playerName)
 
 int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
 {
-  if(timeBudget < 1){
-    timeBudget = DEFAULT_TIME_FOR_MOVE;
+  if(timeBudget < 0){
+    timeBudget = abs(timeBudget);
   }
 
 
@@ -430,4 +429,15 @@ bool isInputHintable(const char* input)
     return (input[0] >= 'A' && input[0] <= 'H' &&
             input[1] >= '1' && input[1] <= '8');
   return false;
+}
+
+void scanTimeBudget(int *timeBudget)
+{
+  printf("Enter time limit for minimax bot's move (in seconds):\n");
+  scanf("%d", timeBudget);
+  if(*timeBudget < 0){
+    system("clear");
+    printf("invalid value, try again\n");
+    scanTimeBudget(timeBudget);
+  }
 }

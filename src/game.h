@@ -70,6 +70,7 @@ void choosePlayer(Tplayer *player, const char* playerName);
  * @param white pointer to player function for white
  * @param black pointer to player function for black
  * @param timeBudget time in seconds allowed for minimax's move
+ * (if negative then timeBudget = abs(timeBudget))
  * 
  * @return 0 for draw or 1 for win of white or -1 for win of black
  */
@@ -171,6 +172,10 @@ void insertSort(TmoveList *ml, int *keys, bool increasing);
  */
 void toUpper(char*);
 
+/**
+ * gets time for minimax bot's move from user
+ */
+void scanTimeBudget(int *timeBudget);
 
 /**
  * returns true for inputs of len>=2 where input[0] and input[1]
