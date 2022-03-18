@@ -16,9 +16,8 @@
 
 int main()
 {
-  if(system("clear") != 0){
+  if(clearScreen() != 0){
     fprintf(stderr, "unable to clear screen");
-    return -1;
   }
 
   srand(time(NULL));  //for random bot's randomness

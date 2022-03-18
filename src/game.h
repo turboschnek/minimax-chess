@@ -185,4 +185,11 @@ void scanTimeBudget(int *timeBudget);
  */
 bool isInputHintable(const char* input);
 
+
+/**
+ * clears terminal
+ * @return 0 if OK, 1 if failed
+ */
+int clearScreen(void);
+
 #endif

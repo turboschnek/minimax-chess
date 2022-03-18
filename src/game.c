@@ -23,14 +23,14 @@ int game(void)
   Tplayer white;
   Tplayer black;
   choosePlayer(&white, "white");
-  system("clear");
+  clearScreen();
   choosePlayer(&black, "black");
-  system("clear");
+  clearScreen();
 
   
   if(black == minimaxBotGetMove || white == minimaxBotGetMove){
     scanTimeBudget(&timeBudget);
-    system("clear");
+    clearScreen();
   }
 
 
@@ -81,7 +81,7 @@ void choosePlayer(Tplayer *player, const char* playerName)
     *player = &minimaxBotGetMove;
     break;
   default:
-    system("clear");
+    clearScreen();
     printf("invalid choice\n");
     choosePlayer(player, playerName);
     break;
@@ -111,7 +111,7 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
 
       moveBoard(moveBuffer, b);
 
-      system("clear");
+      clearScreen();
       printf("Black to move:\nstatic eval: %d\
              \nmoves: %d\nlastMove/depth/time: %s/%d/%ld\n",
              evaluateBoard(b), b->move, b->lastMove, depth, seconds);
@@ -127,7 +127,7 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
 
       moveBoard(moveBuffer, b);
 
-      system("clear");
+      clearScreen();
       printf("White to move:\nstatic eval: %d\
              \nmoves: %d\nlastMove/depth/time: %s/%d/%ld\n",
              evaluateBoard(b), b->move, b->lastMove, depth, seconds);
@@ -257,7 +257,7 @@ int humanGetMove(Tboard *b, char *input, int _)
         TmoveList* hints = initMoveList(2);
         generateHints(b, input, hints);
 
-        system("clear");
+        clearScreen();
         printf("!INVALID MOVE!\nstatic eval: %d\
                \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
                evaluateBoard(b), b->move, b->lastMove);
@@ -265,7 +265,7 @@ int humanGetMove(Tboard *b, char *input, int _)
 
         freeMoveList(hints);
       } else {
-        system("clear");
+        clearScreen();
         printf("!INVALID MOVE!\nstatic eval: %d\
                \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
                evaluateBoard(b), b->move, b->lastMove);
@@ -273,7 +273,7 @@ int humanGetMove(Tboard *b, char *input, int _)
       }
     }
     else {
-      system("clear");
+      clearScreen();
       printf("!INVALID MOVE!\nstatic eval: %d\
              \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
              evaluateBoard(b), b->move, b->lastMove);
@@ -436,8 +436,16 @@ void scanTimeBudget(int *timeBudget)
   printf("Enter time limit for minimax bot's move (in seconds):\n");
   scanf("%d", timeBudget);
   if(*timeBudget < 0){
-    system("clear");
+    clearScreen();
     printf("invalid value, try again\n");
     scanTimeBudget(timeBudget);
   }
+}
+
+int clearScreen()
+{
+  if(system("clear")){
+    return 0;
+  }
+  return 1;
 }
