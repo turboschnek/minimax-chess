@@ -165,13 +165,18 @@ void printDetailedMoveScheme(Tboard *b, int depth)
   TmoveList *ml = initMoveList(8);
   generateAllPossibleMoves(b, ml);
 
+
+  long sum = 0;
   for(int i = 0; i < ml->filled; i++){
     Tboard *copy = copyBoard(b);
 
     moveBoard(ml->moves[i], copy);
-    printf("%5s -> %ld\n", ml->moves[i], countMoves(copy, depth-1));
+    long temp = countMoves(copy, depth-1);
+    printf("%5s -> %ld\n", ml->moves[i], temp);
+    sum += temp;
 
     freeBoard(copy);
   }
+  printf("\nsearched moves: %ld\n", sum);
   freeMoveList(ml);
 }
