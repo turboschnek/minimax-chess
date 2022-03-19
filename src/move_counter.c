@@ -26,6 +26,8 @@ int moveCounterMain()
     return 1;
   }
 
+  printBoard(stdout, b);
+
   int maxDepth = 0;
   printf("depth of search:\n");
   scanf("%d", &maxDepth);

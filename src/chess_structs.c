@@ -75,10 +75,16 @@ Tboard* copyBoard(const Tboard *input)
 
 Tboard* fenToBoard(char *fen)
 {
+  int fenLen = strlen(fen);
+  
   Tboard *b = malloc(sizeof(Tboard));
   int index = 0;
 
   b->pieceCount = 0;
+  
+  b->canBlackCastle[0] = b->canBlackCastle[1] =\
+  b->canWhiteCastle[0] = b->canWhiteCastle[1] = false;
+
 
   int i = 0, j = 0;
   //pieces
@@ -123,44 +129,55 @@ Tboard* fenToBoard(char *fen)
     b->move = 1;
   }
   index++;
+  if(fenLen-1 <= index){
+    return b;
+  }
   if(fen[index] != ' '){
     free(b);
     return NULL;
   }
   index++;
 
+  if(fenLen-1 <= index){
+    return b;
+  }
+
   
   //castling
-  b->canBlackCastle[0] = b->canBlackCastle[1] =\
-  b->canWhiteCastle[0] = b->canWhiteCastle[1] = false;
-  
-  while(fen[index] != ' '){
-    switch (fen[index])
-    {
-    case 'K':
-      b->canWhiteCastle[1] = true;
-      break;
-
-    case 'Q':
-      b->canWhiteCastle[0] = true;
-      break;
-    
-    case 'k':
-      b->canBlackCastle[1] = true;
-      break;
-
-    case 'q':
-      b->canBlackCastle[0] = true;
-      break;
-
-    default:
-      free(b);
-      return NULL;
-    }
+  if(fen[index] == '-'){
     index++;
+  } else {
+    while(fen[index] != ' '){
+      switch (fen[index])
+      {
+      case 'K':
+        b->canWhiteCastle[1] = true;
+        break;
+
+      case 'Q':
+        b->canWhiteCastle[0] = true;
+        break;
+      
+      case 'k':
+        b->canBlackCastle[1] = true;
+        break;
+
+      case 'q':
+        b->canBlackCastle[0] = true;
+        break;
+
+      default:
+        free(b);
+        return NULL;
+      }
+      index++;
+    }
   }
 
   index++;
+  if(fenLen-1 <= index){
+    return b;
+  }
 
 
   //lastMove
@@ -200,6 +217,9 @@ Tboard* fenToBoard(char *fen)
   }
 
   index++;
+  if(fenLen-2 <= index){
+    return b;
+  }
   if(fen[index] != ' '){
     free(b->lastMove);
     free(b);
@@ -207,21 +227,19 @@ Tboard* fenToBoard(char *fen)
   }
   index++;
 
-  b->boringMoveCount = fen[index] - '0';
-  b->boringPoss = malloc(b->boringMoveCount * sizeof(char*));
-  for(int a = 0; a < b->boringMoveCount; a++){
-    b->boringPoss[a] = malloc(POS_STRING_LEN*sizeof(char));
-    for(int l = 0; l < POS_STRING_LEN-1; l++){
-      b->boringPoss[a][l] = ' ';
+  if(isdigit(fen[index])){
+    b->boringMoveCount = fen[index] - '0';
+    b->boringPoss = malloc(b->boringMoveCount * sizeof(char*));
+    for(int a = 0; a < b->boringMoveCount; a++){
+      b->boringPoss[a] = malloc(POS_STRING_LEN*sizeof(char));
+      for(int l = 0; l < POS_STRING_LEN-1; l++){
+        b->boringPoss[a][l] = ' ';
+      }
+      b->boringPoss[a][POS_STRING_LEN-1] = '\0';
     }
-    b->boringPoss[a][POS_STRING_LEN-1] = '\0';
-  }
-  
-  index++;
-  if(fen[index] != ' '){
-    free(b->lastMove);
-    free(b);
-    return NULL;
+  } else{
+    b->boringMoveCount = 0;
+    b->boringPoss = malloc(0);
   }
 
   return b;
