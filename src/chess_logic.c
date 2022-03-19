@@ -267,8 +267,15 @@ void generateAllPossibleMoves(Tboard * b, TmoveList *ml)
   if(b->move % 2 == 0) color = 'a';
   else color = 'A';
 
-  int kingPos[2] = {0, 0};
+  int *kingPos = malloc(2 * sizeof(int));
   getPieceLocation(b, color + ('k' - 'a'), kingPos);
+  if(!(kingPos[0] >= 0 && kingPos[0] <= 7 &&
+       kingPos[1] >= 0 && kingPos[1] <= 7)){
+    free(kingPos);
+    fprintf(stderr, "\nERROR:\nkingPos is not valid in fun generateAllPossibleMoves\n");
+    printBoard(stdout, b);
+    return;
+  }
   if(gotChecked(b, kingPos)){
     TmoveList *tempMl = initMoveList(8);
     bool buffer[2];
@@ -305,6 +312,7 @@ void generateAllPossibleMoves(Tboard * b, TmoveList *ml)
       }
     }
   }
+  free(kingPos);
 }
 
 
@@ -832,9 +840,49 @@ bool isEnPassantLegal(const Tboard* b,
 
 
   //takes care of this pos enpassanting: 'R', ' ', 'p', 'P', ' ', 'k'
+    
+  int leftOffset = 0, rightOffset = 0;
+  //if enpassanting to the left
+  if(moveVector[0] == -1){
+    leftOffset = 1;
+  } else {
+    rightOffset = 1;
+  }
     // if king has same vertical index
   if(myKingPos[1] == pos[1]){
-    if(pos[0] > myKingPos[0]){
+    if(pos[0] < myKingPos[0]){
+
+      for(int i = pos[0] - leftOffset - 1; i > 0; i--){
+        if(b->pieces[pos[1]][i] == oppColor + ('r' - 'a') ||
+           b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) break;
+
+        if(b->pieces[pos[1]][i] != ' ') return true;
+      }
+
+      for(int i = pos[0] + rightOffset + 1; i < myKingPos[0]; i++){
+        if(b->pieces[pos[1]][i] != ' ') return true;
+      }
+
+      return false;
+    } else {
+
+      for(int i = pos[0] + rightOffset + 1; i < 7; i++){
+        if(b->pieces[pos[1]][i] == oppColor + ('r' - 'a') ||
+           b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) break;
+
+        if(b->pieces[pos[1]][i] != ' ') return true;
+      }
+
+       for(int i = pos[0] - leftOffset - 1; i > myKingPos[0]; i--){
+        if(b->pieces[pos[1]][i] != ' ') return true;
+      }
+
+      return false;
+    }
+
+    //this didn't work but my brain might have not worked as well,
+    //so let this chunk of code rest here
+    /*if(pos[0] > myKingPos[0]){
       for(int i = (pos[0] + ((moveVector[0]+1)/2) + 1); i < 8; i++){
         if(b->pieces[pos[1]][i] == oppColor + ('r' - 'a') ||
            b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) return false;
@@ -842,13 +890,14 @@ bool isEnPassantLegal(const Tboard* b,
         if(b->pieces[pos[1]][i] != ' ') break;
       }
     } else {
-      for(int i = (pos[0] - ((moveVector[0]-1)/2) - 1); i < 8; i--){
+      //here is the problem:
+      for(int i = (pos[0] - ((moveVector[0]-1)/2) - 1); i > 0; i--){
         if(b->pieces[pos[1]][i] == oppColor + ('r' - 'a') ||
            b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) return false;
 
         if(b->pieces[pos[1]][i] != ' ') break;
       }
-    }
+    }*/
   }
 
   return true;

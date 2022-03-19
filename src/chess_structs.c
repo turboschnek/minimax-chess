@@ -81,6 +81,8 @@ Tboard* fenToBoard(char *fen)
   int index = 0;
 
   b->pieceCount = 0;
+  b->boringMoveCount = 0;
+  b->boringPoss = malloc(0);
   
   b->canBlackCastle[0] = b->canBlackCastle[1] =\
   b->canWhiteCastle[0] = b->canWhiteCastle[1] = false;
@@ -229,7 +231,7 @@ Tboard* fenToBoard(char *fen)
 
   if(isdigit(fen[index])){
     b->boringMoveCount = fen[index] - '0';
-    b->boringPoss = malloc(b->boringMoveCount * sizeof(char*));
+    b->boringPoss = realloc(b->boringPoss, b->boringMoveCount * sizeof(char*));
     for(int a = 0; a < b->boringMoveCount; a++){
       b->boringPoss[a] = malloc(POS_STRING_LEN*sizeof(char));
       for(int l = 0; l < POS_STRING_LEN-1; l++){
@@ -239,7 +241,6 @@ Tboard* fenToBoard(char *fen)
     }
   } else{
     b->boringMoveCount = 0;
-    b->boringPoss = malloc(0);
   }
 
   return b;

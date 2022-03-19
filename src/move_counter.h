@@ -11,9 +11,11 @@
 
 
 /**
+ * @param debuugMode if true, prints detailend view of search
+ * 
  * @return 0 if OK else 1
  */
-int moveCounterMain(void);
+int moveCounterMain(bool debugMode);
 
 /**
  * Counts possible move sequences in given depth
@@ -28,5 +30,7 @@ int moveCounterMain(void);
 long countMoves(Tboard *b, int depth);
 
 bool __ifIsCheckedSetLastMoveToCheck(Tboard *b);
+
+void printDetailedMoveScheme(Tboard *b, int depth);
 
 #endif

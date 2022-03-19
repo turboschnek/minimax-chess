@@ -25,8 +25,7 @@ int main(int argc, char **argv)
   switch(argc){
     case 2:
       if(strcmp(argv[1], "-c") == 0){
-        moveCounterMain();
-        return 0;
+        return moveCounterMain(false);
         
       } else if(strcmp(argv[1], "-g") == 0){
         return playGame();
@@ -34,6 +33,9 @@ int main(int argc, char **argv)
       } else if(strcmp(argv[1], "-d") == 0){
         setIsClearScreenActive(false);
         return playGame();
+
+      } else if(strcmp(argv[1], "-m") == 0){
+        return moveCounterMain(true);
 
       }else{
         printHelp();
@@ -69,7 +71,8 @@ void printHelp()
   const char *options[] = {
     "-g        -game (default)"
     "-d        -game with debug mode (disables clear screen)",
-    "-c        -count future moves of posstring"
+    "-c        -count future moves of FEN string",
+    "-m        -count future moves made from every moved FEN string"
   };
 
   int optionCount = sizeof(options) / sizeof(const char*);

@@ -11,8 +11,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 
-int moveCounterMain()
+
+int moveCounterMain(bool debugMode)
 {
   char *position = malloc(100 * sizeof(char));
   printf("insert FEN string:\n");
@@ -25,6 +27,7 @@ int moveCounterMain()
     printf("invalid FEN string\n");
     return 1;
   }
+  printf("last move: %s\n", b->lastMove);
 
   __ifIsCheckedSetLastMoveToCheck(b);
 
@@ -33,15 +36,58 @@ int moveCounterMain()
   } else {
     printf("black to move:\n");
   }
+  printf("w: %d %d\nb: %d %d\n", b->canWhiteCastle[0], b->canWhiteCastle[1],
+                                 b->canBlackCastle[0], b->canBlackCastle[1]);
+  printf("last move: %s\n", b->lastMove);
 
   printBoard(stdout, b);
 
   int maxDepth = 0;
   printf("depth of search:\n");
   scanf("%d", &maxDepth);
-  printf("results:\n");
-  for(int i = 1; i <= maxDepth; i++){
-    printf("depth %d -> %ld\n", i, countMoves(b, i));
+
+  if(debugMode){
+    char *inputMove = calloc(MAX_INP_LEN, sizeof(char));
+    inputMove[MAX_INP_LEN-1] = '\0';
+    while(true){
+      printDetailedMoveScheme(b, maxDepth);
+      printBoard(stdout, b);
+      printf("move to node: (quit to quit)\n");
+      
+      
+      scanf("%s", inputMove);
+      if(strcmp(inputMove, "quit") == 0){
+        free(inputMove);
+        return 0;
+      }
+      for(int i = 0; i < MAX_INP_LEN-1; i++){
+        inputMove[i] = toupper(inputMove[i]);
+      }
+
+      while(!isInputValid(inputMove, b)){
+        printf("invalid input\n");
+        printf("move to node: (quit to quit)\n");
+        scanf("%s", inputMove);
+        if(strcmp(inputMove, "quit") == 0){
+          free(inputMove);
+          return 0;
+        }
+        for(int i = 0; i < MAX_INP_LEN-1; i++){
+          inputMove[i] = toupper(inputMove[i]);
+        }
+      }
+
+      moveBoard(inputMove, b);
+      printf("depth of search:\n");
+      scanf("%d", &maxDepth);
+    }
+    free(inputMove);
+
+  } else {
+    printf("results:\n");
+    for(int i = 1; i <= maxDepth; i++){
+      printf("depth %d -> %ld\n", i, countMoves(b, i));
+    }
   }
   
   freeBoard(b);
@@ -78,24 +124,28 @@ bool __ifIsCheckedSetLastMoveToCheck(Tboard *b)
 {
   char *lastMoveBackup = malloc(MAX_INP_LEN * sizeof(char));
   strcpy(lastMoveBackup, b->lastMove);
+
+  char king = 'k';
+  if(b->move%2 == 1){
+    king = 'K';
+  }
+  int kingPos[2];
+  getPieceLocation(b, king, kingPos);
+
   for(int i = 0; i < 8; i++){
     for(int j = 0; j < 8; j++){
-      char king = 'k';
-      if(b->move%2 == 1){
-        king = 'K';
-      }
-      int kingPos[2];
-      getPieceLocation(b, king, kingPos);
       
       strcpy(b->lastMove, (char []){i + 'A',
-                                    j + '1',
+                                    '8' - j,
                                     i + 'A',
-                                    j + '1',
+                                    '8' - j,
                                     '\0'});
-
       if(gotChecked(b, kingPos)){
-        free(lastMoveBackup);
-        return true;
+        if(!((king == 'k' && isLower(b->pieces[j][i])) ||
+           (king == 'K' && isUpper(b->pieces[j][i])))){
+            free(lastMoveBackup);
+            return true;
+        }
       }
     }
   }
@@ -103,4 +153,25 @@ bool __ifIsCheckedSetLastMoveToCheck(Tboard *b)
   strcpy(b->lastMove, lastMoveBackup);
   free(lastMoveBackup);
   return false;
+}
+
+
+void printDetailedMoveScheme(Tboard *b, int depth)
+{
+  if(depth == 0){
+    return;
+  }
+
+  TmoveList *ml = initMoveList(8);
+  generateAllPossibleMoves(b, ml);
+
+  for(int i = 0; i < ml->filled; i++){
+    Tboard *copy = copyBoard(b);
+
+    moveBoard(ml->moves[i], copy);
+    printf("%5s -> %ld\n", ml->moves[i], countMoves(copy, depth-1));
+
+    freeBoard(copy);
+  }
+  freeMoveList(ml);
 }
