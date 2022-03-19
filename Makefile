@@ -45,7 +45,7 @@ valgrind_test:
 #https://www.chessprogramming.org/Perft_Results
 move_counter_test:
 	cd bin; \
-	for i in 1 2 3 4 5; do \
+	for i in 1 2 3 4 5 6; do \
 		echo "-----------------test$$i--------------------"; \
 		./chess -c < ../$(TESTDIR)/move_counter_test_in$$i.txt; \
 		echo "correct:"; \
