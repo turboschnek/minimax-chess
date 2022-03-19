@@ -112,18 +112,6 @@ int minimaxBotGetMove(Tboard *b, char *output, int seconds);
 
 
 /**
- * Counts possible move sequences for given depth
- * 
- * @param b initial board position
- * @param depth depth of move tree
- * 
- * @return number of possible moves in the future
- * 
- * @note for starting pos - depth 1 -> 20, depth 2 -> 400
- */
-long countMoves(Tboard *b, int depth);
-
-/**
  * Do not use directly unless you really know what are you doing
  * recursive part of minimax alg
  * 

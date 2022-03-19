@@ -8,6 +8,9 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
+
 
 Tboard* initBoard()
 {
@@ -65,6 +68,160 @@ Tboard* copyBoard(const Tboard *input)
     for (int j = 0; j < 8; j++){
       b->pieces[i][j] = input->pieces[i][j];
     }
+  }
+
+  return b;
+}
+
+Tboard* fenToBoard(char *fen)
+{
+  Tboard *b = malloc(sizeof(Tboard));
+  int index = 0;
+
+  b->pieceCount = 0;
+
+  int i = 0, j = 0;
+  //pieces
+  while(fen[index] != ' '){
+    if(fen[index] == '/')
+      index++;
+    while(fen[index] != '/' && fen[index] != ' '){
+      if(isalpha(fen[index])){
+        b->pieces[i][j] = switchCase(fen[index]);
+        b->pieceCount++;
+        j++;
+      } else if(isdigit(fen[index])){
+        for(int k = 0; k < (fen[index] - '0'); k++){
+          b->pieces[i][j + k] = ' ';
+        }
+        j += (fen[index] - '0');
+      } else {
+        free(b);
+        return NULL;
+      }
+      index++;
+    }
+    i++;
+
+    if(j == 8){
+      j = 0;
+    } else{
+      free(b);
+      return NULL;
+    }
+  }
+  if(i != 8){
+    free(b);
+    return NULL;
+  }
+
+
+  index++;
+  if(fen[index] == 'w'){
+    b->move = 0;
+  } else if(fen[index] == 'b'){
+    b->move = 1;
+  }
+  index++;
+  if(fen[index] != ' '){
+    free(b);
+    return NULL;
+  }
+  index++;
+
+  
+  //castling
+  b->canBlackCastle[0] = b->canBlackCastle[1] =\
+  b->canWhiteCastle[0] = b->canWhiteCastle[1] = false;
+  
+  while(fen[index] != ' '){
+    switch (fen[index])
+    {
+    case 'K':
+      b->canWhiteCastle[1] = true;
+      break;
+
+    case 'Q':
+      b->canWhiteCastle[0] = true;
+      break;
+    
+    case 'k':
+      b->canBlackCastle[1] = true;
+      break;
+
+    case 'q':
+      b->canBlackCastle[0] = true;
+      break;
+
+    default:
+      free(b);
+      return NULL;
+    }
+    index++;
+  }
+
+  index++;
+
+
+  //lastMove
+  char temp[2];
+  if(fen[index] == '-'){
+    b->lastMove = malloc(MAX_INP_LEN * sizeof(char));
+    strcpy(b->lastMove, "0000");
+
+  } else {
+    if(isalpha(fen[index])){
+      temp[0] = toupper(fen[index]);
+      index++;
+    } else {
+      free(b);
+      return NULL;
+    }
+
+    if(isdigit(fen[index])){
+      temp[1] = fen[index];
+      index++;
+    } else {
+      free(b);
+      return NULL;
+    }
+  
+    b->lastMove = malloc(MAX_INP_LEN * sizeof(char));
+    if(temp[1] == '3'){
+      strcpy(b->lastMove, (char[]){temp[0], '2', temp[0], '4', '\0'});
+    
+    } else if(temp[1] == '6'){
+      strcpy(b->lastMove, (char[]){temp[0], '7', temp[0], '5', '\0'});
+    } else {
+      free(b->lastMove);
+      free(b);
+      return NULL;
+    }
+  }
+
+  index++;
+  if(fen[index] != ' '){
+    free(b->lastMove);
+    free(b);
+    return NULL;
+  }
+  index++;
+
+  b->boringMoveCount = fen[index] - '0';
+  b->boringPoss = malloc(b->boringMoveCount * sizeof(char*));
+  for(int a = 0; a < b->boringMoveCount; a++){
+    b->boringPoss[a] = malloc(POS_STRING_LEN*sizeof(char));
+    for(int l = 0; l < POS_STRING_LEN-1; l++){
+      b->boringPoss[a][l] = ' ';
+    }
+    b->boringPoss[a][POS_STRING_LEN-1] = '\0';
+  }
+  
+  index++;
+  if(fen[index] != ' '){
+    free(b->lastMove);
+    free(b);
+    return NULL;
   }
 
   return b;
@@ -140,4 +297,16 @@ void freeMoveList(TmoveList* ml)
   }
   free(ml->moves);
   free(ml);
+}
+
+
+char switchCase(char c)
+{
+  if(islower(c)){
+    return toupper(c);
+  } else if (isupper(c)){
+    return tolower(c);
+  }
+
+  return c;
 }

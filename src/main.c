@@ -5,6 +5,7 @@
  */
 
 #include "game.h"
+#include "move_counter.h"
 
 #include <math.h>
 #include <time.h>
@@ -19,16 +20,26 @@ int playGame(void);
 void printHelp(void);
 
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
   switch(argc){
     case 2:
-      if(strcmp(argv[1], "-d") == 0){
+      if(strcmp(argv[1], "-c") == 0){
+        moveCounterMain();
+        return 0;
+        
+      } else if(strcmp(argv[1], "-g") == 0){
+        return playGame();
+
+      } else if(strcmp(argv[1], "-d") == 0){
         setIsClearScreenActive(false);
-      } else{
+        return playGame();
+
+      }else{
         printHelp();
-        return 1;
+        return 0;
       }
+
 
     case 1:
       return playGame();
@@ -37,6 +48,7 @@ int main(int argc, char *argv[])
     default:
       printHelp();
   }
+  return 0;
 }
 
 
@@ -55,15 +67,17 @@ int playGame()
 void printHelp()
 {
   const char *options[] = {
-    "-d    -debug mode (disable clear screen)"
+    "-g        -game (default)"
+    "-d        -game with debug mode (disables clear screen)",
+    "-c        -count future moves of posstring"
   };
 
   int optionCount = sizeof(options) / sizeof(const char*);
 
   
-  printf("Usage: ./chess [OPTIONS]\n\n");
+  printf("Usage: ./chess [OPTION]\n\n");
   printf("OPTIONS:\n");
   for(int i = 0; i < optionCount; i++){
-    printf("  %s", options[i]);
+    printf("  %s\n", options[i]);
   }
 }

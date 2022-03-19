@@ -37,7 +37,7 @@ typedef struct{
   // total number of moves made
   int move;
 
-  // number of moves without take or pawn move (for draws by repetition)
+  // number of moves without take or pawn move (for fifty-move rule)
   int boringMoveCount;
 
   // array of boring positions since last unboring move
@@ -66,6 +66,14 @@ Tboard* initBoard(void);
  * @return pointer to copy of b
  */
 Tboard* copyBoard(const Tboard *b);
+
+
+/**
+ * initializes board that matches the fenString
+ * @return pointer to board if OK else NULL
+ * @note https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+ */
+Tboard* fenToBoard(char *fenString);
 
 /**
  * returns posString of current possition
@@ -131,5 +139,10 @@ void appendMoveList(TmoveList* ml, char* move);
  * @return void
  */
 void freeMoveList(TmoveList* ml);
+
+/**
+ * returns caseswitched c 
+ */
+char switchCase(char c);
 
 #endif

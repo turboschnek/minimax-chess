@@ -99,8 +99,7 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
   }
 
 
-  FILE *gameSave = fopen("game_save.txt", "w");
-  fprintf(gameSave, "1\n1\n");
+  FILE *gameSave = fopen("game_log.txt", "w");
   char *moveBuffer = malloc(MAX_INP_LEN * sizeof(char));
   int result = 2;
   while(result == 2)
@@ -293,31 +292,6 @@ int humanGetMove(Tboard *b, char *input, int _)
   return 0;
 }
 
-long countMoves(Tboard *b, int depth){
-  // unoptimized performance with gcc -O3: depth = 6: 20s, depth = 5: 1s,
-
-  if(depth == 0){
-    return 1;
-  }
-
-  long sum = 0;
-
-  TmoveList *ml = initMoveList(8);
-  generateAllPossibleMoves(b, ml);
-
-  for(int i = 0; i < ml->filled; i++){
-    Tboard *copy = copyBoard(b);
-
-    moveBoard(ml->moves[i], copy);
-    sum += countMoves(copy, depth-1);
-
-    freeBoard(copy);
-  }
-  freeMoveList(ml);
-
-  return sum;
-}
-
 int minimax(Tboard *b, int depth, bool isMax, int alfa, int beta)
 {
   if(depth == 0){
@@ -448,7 +422,7 @@ void scanTimeBudget(int *timeBudget)
 int clearScreen(void)
 {
   if(isClearScreenActive){
-    if(system("clear")){
+    if(system("clear") == 0){
       return 0;
     }
     return 1;

@@ -7,7 +7,7 @@ CFLAGS = -Wall -g -O3
 LIBS= -lm
 
 
-OBJFILES= main.o game.o evaluation.o chess_logic.o chess_structs.o
+OBJFILES= main.o move_counter.o game.o evaluation.o chess_logic.o chess_structs.o
 
 SRCDIR= src
 BINDIR= bin
@@ -36,6 +36,16 @@ clean:
 	rm -f $(OBJFILES)
 
 
-valgrind-test:
+valgrind_test:
 	cd bin; \
 	valgrind ./chess -d < ../$(TESTDIR)/valgrind_test_in.txt
+
+
+#using inittial position and position 5 from this site:
+#https://www.chessprogramming.org/Perft_Results
+move_counter_test:
+	cd bin; \
+	./chess -c < ../$(TESTDIR)/move_counter_test_in1.txt; \
+	./chess -c < ../$(TESTDIR)/move_counter_test_in2.txt
+
+#and I am failing the second test... TODO tomorow
