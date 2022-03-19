@@ -27,4 +27,6 @@ int moveCounterMain(void);
  */
 long countMoves(Tboard *b, int depth);
 
+bool __ifIsCheckedSetLastMoveToCheck(Tboard *b);
+
 #endif

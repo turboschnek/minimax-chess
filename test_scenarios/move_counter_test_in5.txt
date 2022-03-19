@@ -1,9 +1,8 @@
 rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8
-5
+4
 
 
 depth 1 -> 44
 depth 2 -> 1486
 depth 3 -> 62379
 depth 4 -> 2103487
-depth 5 -> 89941194
