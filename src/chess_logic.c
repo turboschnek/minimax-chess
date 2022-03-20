@@ -30,15 +30,19 @@ const int bishopMoveVectors[4][2] = {
   {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
 };
 
+void printBoard(const Tboard *b)
+{
+  fprintBoard(stdout, b);
+}
 
-void printBoard(FILE* file, const Tboard *b)
+void fprintBoard(FILE* file, const Tboard *b)
 {
   TmoveList *emptyML = initMoveList(0);
-  printBoardWithHints(file, b, emptyML);
+  fprintBoardWithHints(file, b, emptyML);
   freeMoveList(emptyML);
 }
 
-void printBoardWithHints(FILE* file, const Tboard *b, TmoveList *hints)
+void fprintBoardWithHints(FILE* file, const Tboard *b, TmoveList *hints)
 {
   int **hintIndex = malloc(hints->filled * sizeof(int*));
   for(int i = 0; i < hints->filled; i++) {
@@ -273,7 +277,7 @@ void generateAllPossibleMoves(Tboard * b, TmoveList *ml)
        kingPos[1] >= 0 && kingPos[1] <= 7)){
     free(kingPos);
     fprintf(stderr, "\nERROR:\nkingPos is not valid in fun generateAllPossibleMoves\n");
-    printBoard(stdout, b);
+    printBoard(b);
     return;
   }
   if(gotChecked(b, kingPos)){
@@ -722,6 +726,9 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         //castling
         if(direction == 0 &&
            b->canWhiteCastle[0] &&
+           b->pieces[7][1] == ' ' &&
+           b->pieces[7][2] == ' ' &&
+           b->pieces[7][3] == ' ' &&
            isKingMovePossible(b, 'a', pos,
                               (const int[2]) {destination[0]-1,
                                               destination[1]}))
@@ -733,6 +740,8 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
                                       '\0'});
         } else if(direction == 2 &&
                   b->canWhiteCastle[1] &&
+                  b->pieces[7][5] == ' ' &&
+                  b->pieces[7][6] == ' ' &&
                   isKingMovePossible(b, 'a', pos,
                                      (const int[2]) {destination[0]+1,
                                                      destination[1]}))
@@ -776,6 +785,9 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         //castling
         if(direction == 0 &&
            b->canBlackCastle[0] &&
+           b->pieces[0][1] == ' ' &&
+           b->pieces[0][2] == ' ' &&
+           b->pieces[0][3] == ' ' &&
            isKingMovePossible(b, 'A', pos,
                               (const int[2]) {destination[0]-1,
                                               destination[1]}))
@@ -787,6 +799,8 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
                                       '\0'});
         } else if(direction == 2 &&
                   b->canBlackCastle[1] &&
+                  b->pieces[0][5] == ' ' &&
+                  b->pieces[0][6] == ' ' &&
                   isKingMovePossible(b, 'A', pos,
                                      (const int[2]) {destination[0]+1,
                                                      destination[1]}))

@@ -27,31 +27,24 @@ int moveCounterMain(bool debugMode)
     printf("invalid FEN string\n");
     return 1;
   }
-  printf("last move: %s\n", b->lastMove);
 
   __ifIsCheckedSetLastMoveToCheck(b);
 
-  if(b->move % 2 == 0){
-    printf("white to move:\n");
-  } else {
-    printf("black to move:\n");
-  }
-  printf("w: %d %d\nb: %d %d\n", b->canWhiteCastle[0], b->canWhiteCastle[1],
-                                 b->canBlackCastle[0], b->canBlackCastle[1]);
-  printf("last move: %s\n", b->lastMove);
+  printBoard(b);
 
-  printBoard(stdout, b);
+  printf("FEN:\n%s\n", position);
 
   int maxDepth = 0;
   printf("depth of search:\n");
   scanf("%d", &maxDepth);
+  printf("%d\n", maxDepth);
 
   if(debugMode){
     char *inputMove = calloc(MAX_INP_LEN, sizeof(char));
     inputMove[MAX_INP_LEN-1] = '\0';
     while(true){
       printDetailedMoveScheme(b, maxDepth);
-      printBoard(stdout, b);
+      printBoard(b);
       printf("move to node: (quit to quit)\n");
       
       
@@ -172,7 +165,17 @@ void printDetailedMoveScheme(Tboard *b, int depth)
 
     moveBoard(ml->moves[i], copy);
     long temp = countMoves(copy, depth-1);
-    printf("%5s -> %ld\n", ml->moves[i], temp);
+
+    //print ml->move[i], but in lower
+    char *tempMove = malloc(MAX_INP_LEN * sizeof(char));
+    strcpy(tempMove, ml->moves[i]);
+    for(int j = 0; tempMove[j] != '\0'; j++){
+      tempMove[j] = tolower(tempMove[j]);
+    }
+    printf("%s: %ld\n", tempMove, temp);
+    free(tempMove);
+
+
     sum += temp;
 
     freeBoard(copy);

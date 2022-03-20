@@ -30,8 +30,9 @@
 void generateAllPossibleMoves(Tboard *b, TmoveList* ml);
 void generateHints(Tboard *b, const char *input, TmoveList* ml);
 
-void printBoard(FILE*, const Tboard* b);
-void printBoardWithHints(FILE*, const Tboard* b, TmoveList *hints);
+void printBoard(const Tboard* b);
+void fprintBoard(FILE*, const Tboard* b);
+void fprintBoardWithHints(FILE*, const Tboard* b, TmoveList *hints);
 char* getPieceGraphics(char piece);
 
 char getLastMovedPiece(const Tboard* b);
