@@ -161,7 +161,8 @@ void moveBoard(const char *input, Tboard *b)
     if(input[4] == '\0') {
       b->pieces[from[1]][from[0]] = b->pieces[from[1]][from[0]] + ('q'-'p');
     } else {
-      b->pieces[from[1]][from[0]] = input[4] + (((b->move+1) % 2) * ('a' - 'A'));
+      b->pieces[from[1]][from[0]] = input[4] +
+                                    (((b->move+1) % 2) * ('a' - 'A'));
     }
   }
 
@@ -179,7 +180,8 @@ void moveBoard(const char *input, Tboard *b)
     b->boringMoveCount++;
 
     b->boringPoss = realloc(b->boringPoss, b->boringMoveCount * sizeof(char*));
-    b->boringPoss[b->boringMoveCount-1] = malloc(POS_STRING_LEN * sizeof(char));
+    b->boringPoss[b->boringMoveCount-1] = malloc(POS_STRING_LEN *
+                                                 sizeof(char));
 
     char *temp = boardToPosString(b);
     strcpy(b->boringPoss[b->boringMoveCount-1], temp);
@@ -276,7 +278,8 @@ void generateAllPossibleMoves(Tboard * b, TmoveList *ml)
   if(!(kingPos[0] >= 0 && kingPos[0] <= 7 &&
        kingPos[1] >= 0 && kingPos[1] <= 7)){
     free(kingPos);
-    fprintf(stderr, "\nERROR:\nkingPos is not valid in fun generateAllPossibleMoves\n");
+    fprintf(stderr, "\nERROR:\n");
+    fprintf(stderr, "kingPos is not valid in fun generateAllPossibleMoves\n");
     printBoard(b);
     return;
   }
@@ -896,25 +899,6 @@ bool isEnPassantLegal(const Tboard* b,
 
       return true;
     }
-
-    //this didn't work but my brain might have not worked as well,
-    //so let this chunk of code rest here
-    /*if(pos[0] > myKingPos[0]){
-      for(int i = (pos[0] + ((moveVector[0]+1)/2) + 1); i < 8; i++){
-        if(b->pieces[pos[1]][i] == oppColor + ('r' - 'a') ||
-           b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) return false;
-
-        if(b->pieces[pos[1]][i] != ' ') break;
-      }
-    } else {
-      //here is the problem:
-      for(int i = (pos[0] - ((moveVector[0]-1)/2) - 1); i > 0; i--){
-        if(b->pieces[pos[1]][i] == oppColor + ('r' - 'a') ||
-           b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) return false;
-
-        if(b->pieces[pos[1]][i] != ' ') break;
-      }
-    }*/
   }
 
   return true;
@@ -1003,7 +987,8 @@ bool gotChecked(const Tboard *b, const int myKingPos[2])
   case 'r':
   case 'R':
     for(int direction = 0; direction < 4; direction++){
-      int moveVector[2] = {rookMoveVectors[direction][0], rookMoveVectors[direction][1]};
+      int moveVector[2] = {rookMoveVectors[direction][0],
+                           rookMoveVectors[direction][1]};
 
       int positionBuffer[2] = {myKingPos[0] + moveVector[0],
                                myKingPos[1] + moveVector[1]};
@@ -1023,7 +1008,8 @@ bool gotChecked(const Tboard *b, const int myKingPos[2])
   case 'Q':
     //bishop
     for(int direction = 0; direction < 4; direction++){
-      int moveVector[2] = {bishopMoveVectors[direction][0], bishopMoveVectors[direction][1]};
+      int moveVector[2] = {bishopMoveVectors[direction][0],
+                           bishopMoveVectors[direction][1]};
 
       int positionBuffer[2] = {myKingPos[0] + moveVector[0],
                                myKingPos[1] + moveVector[1]};
@@ -1041,7 +1027,8 @@ bool gotChecked(const Tboard *b, const int myKingPos[2])
 
     //rook
     for(int direction = 0; direction < 4; direction++){
-      int moveVector[2] = {rookMoveVectors[direction][0], rookMoveVectors[direction][1]};
+      int moveVector[2] = {rookMoveVectors[direction][0],
+                           rookMoveVectors[direction][1]};
 
       int positionBuffer[2] = {myKingPos[0] + moveVector[0],
                                myKingPos[1] + moveVector[1]};
