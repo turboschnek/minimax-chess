@@ -41,16 +41,6 @@ valgrind_test:
 	valgrind ./chess -d < ../$(TESTDIR)/valgrind_test_in.txt
 
 
-#using inittial position and position 5 from this site:
 #https://www.chessprogramming.org/Perft_Results
 move_counter_test:
-	cd bin; \
-	for i in 1 2 3 4 5 6; do \
-		echo "-----------------test$$i--------------------"; \
-		./chess -c < ../$(TESTDIR)/move_counter_test_in$$i.txt; \
-		echo "correct:"; \
-		tail -5 ../$(TESTDIR)/move_counter_test_in$$i.txt; \
-		echo "\n";\
-	done
-	
-#it's soooo bad
+	./move_counter_test.sh $(TESTDIR)
