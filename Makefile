@@ -42,7 +42,7 @@ valgrind_test:
 
 
 #https://www.chessprogramming.org/Perft_Results
-move_counter_verbose_test:
+move_counter_test_verbose:
 	./move_counter_test.sh $(TESTDIR) --verbose
 
 move_counter_test:

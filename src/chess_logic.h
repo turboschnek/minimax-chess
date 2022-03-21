@@ -31,6 +31,7 @@ void generateAllPossibleMoves(Tboard *b, TmoveList* ml);
 void generateHints(Tboard *b, const char *input, TmoveList* ml);
 
 void printBoard(const Tboard* b);
+void printBoardWithHints(const Tboard* b, TmoveList *hints);
 void fprintBoard(FILE*, const Tboard* b);
 void fprintBoardWithHints(FILE*, const Tboard* b, TmoveList *hints);
 char* getPieceGraphics(char piece);

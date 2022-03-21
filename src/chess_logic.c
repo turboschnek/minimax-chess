@@ -35,6 +35,10 @@ void printBoard(const Tboard *b)
   fprintBoard(stdout, b);
 }
 
+void printBoardWithHints(const Tboard* b, TmoveList *hints){
+  fprintBoardWithHints(stdout, b, hints);
+}
+
 void fprintBoard(FILE* file, const Tboard *b)
 {
   TmoveList *emptyML = initMoveList(0);

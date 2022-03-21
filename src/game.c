@@ -38,7 +38,7 @@ int game(void)
 
 
   Tboard *b = initBoard();
-  printf("White to move:\neval: 0\nmoves: 0\nlastMove/depth/time: -/-/-\n");
+  printf("White to move:\nmoves: 0\nlastMove/depth/time: -/-/-\n");
   printBoard(b);
 
   int result = 2;
@@ -114,9 +114,8 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
       moveBoard(moveBuffer, b);
 
       clearScreen();
-      printf("Black to move:\nstatic eval: %d\
-             \nmoves: %d\nlastMove/depth/time: %s/%d/%ld\n",
-             evaluateBoard(b), b->move, b->lastMove, depth, seconds);
+      printf("Black to move:\nmoves: %d\nlastMove/depth/time: %s/%d/%ld\n",
+             b->move, b->lastMove, depth, seconds);
       printBoard(b);
       fprintf(gameSave, "%s\n", b->lastMove);
     } else {
@@ -130,9 +129,8 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
       moveBoard(moveBuffer, b);
 
       clearScreen();
-      printf("White to move:\nstatic eval: %d\
-             \nmoves: %d\nlastMove/depth/time: %s/%d/%ld\n",
-             evaluateBoard(b), b->move, b->lastMove, depth, seconds);
+      printf("White to move:\nmoves: %d\nlastMove/depth/time: %s/%d/%ld\n",
+             b->move, b->lastMove, depth, seconds);
       printBoard(b);
       fprintf(gameSave, "%s\n", b->lastMove);
     }
@@ -265,22 +263,20 @@ int humanGetMove(Tboard *b, char *input, int _)
         printf("!INVALID MOVE!\nstatic eval: %d\
                \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
                evaluateBoard(b), b->move, b->lastMove);
-        fprintBoardWithHints(stdout, b, hints);
+        printBoardWithHints(b, hints);
 
         freeMoveList(hints);
       } else {
         clearScreen();
-        printf("!INVALID MOVE!\nstatic eval: %d\
-               \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
-               evaluateBoard(b), b->move, b->lastMove);
+        printf("!INVALID MOVE!\nmoves: %d\nlastMove/depth/time: %s/0/0\n",
+               b->move, b->lastMove);
         printBoard(b);
       }
     }
     else {
       clearScreen();
-      printf("!INVALID MOVE!\nstatic eval: %d\
-             \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
-             evaluateBoard(b), b->move, b->lastMove);
+      printf("!INVALID MOVE!\nmoves: %d\nlastMove/depth/time: %s/0/0\n",
+             b->move, b->lastMove);
       printBoard(b);
     }
 
