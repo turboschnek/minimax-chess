@@ -72,7 +72,8 @@ void printHelp()
     "-g        -game (default)"
     "-d        -game with debug mode (disables clear screen)",
     "-c        -count future moves of FEN string",
-    "-m        -count future moves made from every moved FEN string"
+    "-m        -count future moves made from every moved FEN string",
+    "-h        -display help"
   };
 
   int optionCount = sizeof(options) / sizeof(const char*);

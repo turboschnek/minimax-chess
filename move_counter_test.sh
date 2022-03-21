@@ -1,10 +1,24 @@
 #!/bin/bash
 
 cd bin; \
-	for i in 1 2 3 4 5 6; do 
+	results=();
+	for i in {1..6}; do 
+		results+=( "FAILED" );
 		echo "-----------------test$i--------------------";
-		./chess -c < ../$1/move_counter_test_in$i.txt;
+		output=$(./chess -c < ../$1/move_counter_test_in$i.txt);
+		echo "${output}";
 		echo "correct:";
-		tail -5 ../$1/move_counter_test_in$i.txt;
-        echo $'\n';
+		correct=$(tail -5 ../$1/move_counter_test_in$i.txt);
+        echo "${correct}";
+		echo "";
+		tmpa=$(echo "${output}" | tail -1);
+		tmpb=$(echo "${correct}" | tail -1);
+		if [ "${tmpa}" = "${tmpb}" ]; then
+			results[$i-1]="passed";
+		fi
+	done
+
+	echo "-----------------overview------------------";
+	for i in {1..6}; do 
+		echo "test $i: ${results[$i-1]}";
 	done
