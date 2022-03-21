@@ -175,7 +175,9 @@ int minimaxBotGetMove(Tboard *b, char *output, int seconds)
   int maxDepth = MAX_MINIMAX_DEPTH-1, startDepth = 1, depthStep = 2,
       depth = startDepth, timeBudget = seconds * 1000000;
   float depthTimeCoeff = 0.5;
-  bool isBlack = (((b->move+1) % 2) == 0), isInTime = true, interrupted = false;
+  bool isBlack = (((b->move+1) % 2) == 0),
+       isInTime = true,
+       interrupted = false;
 
   //white
   TmoveList *ml = initMoveList(16);

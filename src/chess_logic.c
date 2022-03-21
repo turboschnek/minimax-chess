@@ -968,7 +968,8 @@ bool gotChecked(const Tboard *b, const int myKingPos[2])
   case 'b':
   case 'B':
     for(int direction = 0; direction < 4; direction++){
-      int moveVector[2] = {bishopMoveVectors[direction][0], bishopMoveVectors[direction][1]};
+      int moveVector[2] = {bishopMoveVectors[direction][0],
+                           bishopMoveVectors[direction][1]};
 
       int positionBuffer[2] = {myKingPos[0] + moveVector[0],
                                myKingPos[1] + moveVector[1]};

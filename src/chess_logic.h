@@ -44,17 +44,24 @@ bool isInputValid(const char* input, Tboard* b);
 
 void moveBoard(const char* input, Tboard* b);
 bool isEnPassant(const char* input, const Tboard* b);
-bool isEnPassantLegal(const Tboard* b, const int pos[2], const int moveVector[2], int moveRestriction, char oppColor, const int mykingPos[2]);
+bool isEnPassantLegal(const Tboard* b, const int pos[2],
+                      const int moveVector[2], int moveRestriction,
+                      char oppColor, const int mykingPos[2]);
 bool isOnBoard(const int pos[2]);
 void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml);
-bool isKnightMovePossible(const Tboard* b, const char color, const int pos[2], const int moveVector[2]);
-bool isKingMovePossible(const Tboard* b, const char color, const int origin[2], const int dest[2]);
-bool isMoveTake(const Tboard* b, const char color, const int pos[2], const int moveVector[2], const int restriction);
-bool isMoveClean(const Tboard* b, const int pos[2], const int moveVector[2], const int restriction);
+bool isKnightMovePossible(const Tboard* b, const char color,
+                          const int pos[2], const int moveVector[2]);
+bool isKingMovePossible(const Tboard* b, const char color,
+                        const int origin[2], const int dest[2]);
+bool isMoveTake(const Tboard* b, const char color, const int pos[2],
+                const int moveVector[2], const int restriction);
+bool isMoveClean(const Tboard* b, const int pos[2],
+                 const int moveVector[2], const int restriction);
 bool isItsMove(const int move, const char piece);
 void getPieceLocation(const Tboard* b, const char piece, int[2]);
 bool isBlockingCheck(const Tboard* b, const char, const int[2], const int[2]);
-bool doesMoveBlockCheck(const Tboard* b, const char *move, const int kingPos[2]);
+bool doesMoveBlockCheck(const Tboard* b, const char *move,
+                        const int kingPos[2]);
 void disableCastling(Tboard *b, char color, bool buffer[2]);
 void regainCastling(Tboard *b, char color, bool buffer[2]);
 
@@ -63,11 +70,14 @@ bool isColor(const char color, const char piece);
 bool isUpper(const char);
 bool isLower(const char);
 void freeArrayOfStrings(char **arr, int len);
-bool isArrayInArrayOfArrays(int *array, int **arrayOfArrays, int ArrLen, int ArrOfArrsLen);
-bool isStringTwiceInArrayOfStrings(char *array, char **arrayOfArrays, int ArrOfArrsLen);
+bool isArrayInArrayOfArrays(int *array, int **arrayOfArrays,
+                            int ArrLen, int ArrOfArrsLen);
+bool isStringTwiceInArrayOfStrings(char *array, char **arrayOfArrays,
+                                   int ArrOfArrsLen);
 void normalize(int moveVector[2]);
 bool fitsRestriction(const int moveVector[2], int restriction);
 bool isAttacked(const Tboard* b, const char color, const int pos[2]);
-bool willBeAttacked(const Tboard *b, const char color, const int origin[2], const int dest[2]);
+bool willBeAttacked(const Tboard *b, const char color, const int origin[2],
+                    const int dest[2]);
 
 #endif
