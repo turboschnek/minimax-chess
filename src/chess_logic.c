@@ -866,32 +866,35 @@ bool isEnPassantLegal(const Tboard* b,
   if(myKingPos[1] == pos[1]){
     if(pos[0] < myKingPos[0]){
 
-      for(int i = pos[0] - leftOffset - 1; i > 0; i--){
+      for(int i = pos[0] - leftOffset - 1; i >= 0; i--){
         if(b->pieces[pos[1]][i] == oppColor + ('r' - 'a') ||
-           b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) break;
+           b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) {
+            for(int i = pos[0] + rightOffset + 1; i < myKingPos[0]; i++){
+              if(b->pieces[pos[1]][i] != ' ') return true;
+            }
+            return false;
+          }
 
         if(b->pieces[pos[1]][i] != ' ') return true;
       }
 
-      for(int i = pos[0] + rightOffset + 1; i < myKingPos[0]; i++){
-        if(b->pieces[pos[1]][i] != ' ') return true;
-      }
+      return true;
 
-      return false;
     } else {
 
-      for(int i = pos[0] + rightOffset + 1; i < 7; i++){
+      for(int i = pos[0] + rightOffset + 1; i <= 7; i++){
         if(b->pieces[pos[1]][i] == oppColor + ('r' - 'a') ||
-           b->pieces[pos[1]][i] == oppColor + ('q' - 'a')) break;
+           b->pieces[pos[1]][i] == oppColor + ('q' - 'a')){
+              for(int j = pos[0] - leftOffset - 1; j > myKingPos[0]; j--){
+                if(b->pieces[pos[1]][j] != ' ') return true;
+              }
+              return false;
+           }
 
         if(b->pieces[pos[1]][i] != ' ') return true;
       }
 
-       for(int i = pos[0] - leftOffset - 1; i > myKingPos[0]; i--){
-        if(b->pieces[pos[1]][i] != ' ') return true;
-      }
-
-      return false;
+      return true;
     }
 
     //this didn't work but my brain might have not worked as well,
@@ -928,6 +931,9 @@ bool doesMoveBlockCheck(const Tboard* b,
   Tboard *copy = copyBoard(b);
 
   //make move
+  if(isEnPassant(move, copy)){
+    copy->pieces['8' - copy->lastMove[3]][copy->lastMove[2] - 'A'] = ' ';
+  }
   copy->pieces['8' - move[3]]
               [move[2] - 'A'] = copy->pieces['8' - move[1]]
                                             [move[0] - 'A'];
