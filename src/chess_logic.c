@@ -1253,61 +1253,46 @@ bool isBlockingCheck(const Tboard* b,
                      const int pos[2],
                      const int kingPos[2])
 {
-  //bishop
-  for(int direction = 0; direction < 4; direction++){
-    int moveVector[2] = {bishopMoveVectors[direction][0],
-                         bishopMoveVectors[direction][1]};
+  char attacker;
 
-    int positionBuffer[2] = {kingPos[0] + moveVector[0],
-                             kingPos[1] + moveVector[1]};
-    bool inLineWithKing = false;
-    while(isOnBoard(positionBuffer)){
-      if(((b->pieces[positionBuffer[1]]
-                    [positionBuffer[0]] == ('b' - 'a') + oppColor) ||
-          (b->pieces[positionBuffer[1]]
-                    [positionBuffer[0]] == ('q' - 'a') + oppColor)) &&
-          inLineWithKing) return true;
+  int moveVector[2] = {
+    pos[0] - kingPos[0],
+    pos[1] - kingPos[1]
+  };
 
-      if(b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ' &&
-         inLineWithKing) break;
-
-      if(positionBuffer[0] == pos[0] &&
-         positionBuffer[1] == pos[1]) inLineWithKing = true;
-
-      if(b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ' &&
-         !inLineWithKing) break;
-
-      positionBuffer[0] = positionBuffer[0] + moveVector[0];
-      positionBuffer[1] = positionBuffer[1] + moveVector[1];
-    }
+  if(moveVector[0] == 0 || moveVector[1] == 0){
+    attacker = 'r';
+  } else if(abs(moveVector[0]) == abs(moveVector[1])){
+    attacker = 'b';
+  } else {
+    return false;
   }
-  //rook
-  for(int direction = 0; direction < 4; direction++){
-    int moveVector[2] = {rookMoveVectors[direction][0],
-                         rookMoveVectors[direction][1]};
 
-    int positionBuffer[2] = {kingPos[0] + moveVector[0],
-                             kingPos[1] + moveVector[1]};
-    bool inLineWithKing = false;
-    while(isOnBoard(positionBuffer)){
-      if(((b->pieces[positionBuffer[1]]
-                    [positionBuffer[0]] == ('r' - 'a') + oppColor) ||
-          (b->pieces[positionBuffer[1]]
-                    [positionBuffer[0]] == ('q' - 'a') + oppColor)) &&
-         inLineWithKing) return true;
+  normalize(moveVector);
 
-      if(b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ' &&
+
+  //bishop
+  int positionBuffer[2] = {kingPos[0] + moveVector[0],
+                           kingPos[1] + moveVector[1]};
+  bool inLineWithKing = false;
+  while(isOnBoard(positionBuffer)){
+    if(((b->pieces[positionBuffer[1]]
+                  [positionBuffer[0]] == (attacker - 'a') + oppColor) ||
+        (b->pieces[positionBuffer[1]]
+                  [positionBuffer[0]] == ('q' - 'a') + oppColor)) &&
+        inLineWithKing) return true;
+
+    if(b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ' &&
         inLineWithKing) break;
 
-      if(positionBuffer[0] == pos[0] &&
+    if(positionBuffer[0] == pos[0] &&
         positionBuffer[1] == pos[1]) inLineWithKing = true;
 
-      if(b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ' &&
-         !inLineWithKing) break;
+    if(b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ' &&
+        !inLineWithKing) break;
 
-      positionBuffer[0] = positionBuffer[0] + moveVector[0];
-      positionBuffer[1] = positionBuffer[1] + moveVector[1];
-    }
+    positionBuffer[0] = positionBuffer[0] + moveVector[0];
+    positionBuffer[1] = positionBuffer[1] + moveVector[1];
   }
   return false;
 }
