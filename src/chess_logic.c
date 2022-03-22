@@ -1563,9 +1563,17 @@ bool isLower(const char piece)
 
 void normalize(int moveVector[2])
 {
-  for(int i = 0; i < 2; i++){
-    if(abs(moveVector[i]) > 1)
-      moveVector[i] = moveVector[i]/abs(moveVector[i]);
+  int absMax;
+  if(abs(moveVector[0]) > abs(moveVector[1])){
+    absMax = abs(moveVector[0]);
+  } else {
+    absMax = abs(moveVector[1]);
+  }
+
+  if(absMax > 1){
+    for(int i = 0; i < 2; i++){
+      moveVector[i] = moveVector[i]/absMax;
+    }
   }
 }
 
