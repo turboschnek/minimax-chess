@@ -306,15 +306,59 @@ char oppositeColor(const char color);
  */
 bool isColor(const char color, const char piece);
 
-
+/**
+ * for(int i = 0; i < len; i++){  
+ * . . free(arr[i]);  
+ * }  
+ * free(arr);  
+ * 
+ */
 void freeArrayOfStrings(char **arr, int len);
+
+/**
+ * returns true if array is in arrayOfArrays
+ * 
+ * @param array array to be found
+ * @param arrayOfArrays array is searched in there
+ * @param arrLen length of array parameter and arrays in arrayOfArrays
+ * @param arrOfArrsLen length of arrayOfArrays parameter
+ */
 bool isArrayInArrayOfArrays(int *array, int **arrayOfArrays,
-                            int ArrLen, int ArrOfArrsLen);
-bool isStringTwiceInArrayOfStrings(char *array, char **arrayOfArrays,
-                                   int ArrOfArrsLen);
+                            int arrLen, int arrOfArrsLen);
+
+/**
+ * returns true if string is twice in arrayOfStrings
+ * 
+ * @param string string to be found
+ * @param arrayOfStrings string is searched in there
+ * @param ArrOfStringsLen length of arrayOfStrings parameter
+ */
+bool isStringTwiceInArrayOfStrings(char *string, char **arrayOfStrings,
+                                   int ArrOfStringsLen);
+
+/**
+ * makes vector one step long  
+ * (diagonal is longer {1, -1})
+ * 
+ */
 void normalize(int moveVector[2]);
+
+/**
+ * returns true if moveVector fits restriction
+ * 
+ * @param moveVector array of two integers (pos + moveVector == finalPosition)
+ * @param restriction restricts direction of movement to
+ *        one of the following values:  
+ *        0(no restriction), 1(|), 2(/), 3(-), 4(\)
+ */
 bool fitsRestriction(const int moveVector[2], int restriction);
-bool isAttacked(const Tboard* b, const char color, const int pos[2]);
+
+/**
+ * returns true if piece at pos is attacked
+ * 
+ * 
+ */
+bool isAttacked(const Tboard* b, const char oppColor, const int pos[2]);
 bool willBeAttacked(const Tboard *b, const char color, const int origin[2],
                     const int dest[2]);
 
