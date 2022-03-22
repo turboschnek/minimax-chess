@@ -49,6 +49,6 @@ bool __ifIsCheckedSetLastMoveToCheck(Tboard *b);
  * @param depth depth of search
  * 
  */
-void printDetailedMoveScheme(const Tboard *b, int depth);
+void printDetailedMoveScheme(Tboard *b, int depth);
 
 #endif

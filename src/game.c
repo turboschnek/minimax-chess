@@ -70,11 +70,15 @@ int game(void)
 
 void choosePlayer(Tplayer *player, const char* playerName)
 {
-  char choice;
+  //using this ugly string to be immune to Lord Martinek's buff overflow
+  char *choice = malloc(10 * sizeof(char));
   printf("Choose %s player\n", playerName);
   printf("1 - human\n2 - random bot\n3 - minimax bot\n");
-  scanf("%s", &choice);
-  switch(choice){
+  scanf("%9s", choice);
+  if(strlen(choice) > 1){
+    strcpy(choice, "_");
+  }
+  switch(choice[0]){
   case '1':
     *player = &humanGetMove;
     break;
@@ -90,6 +94,7 @@ void choosePlayer(Tplayer *player, const char* playerName)
     choosePlayer(player, playerName);
     break;
   }
+  free(choice);
 }
 
 

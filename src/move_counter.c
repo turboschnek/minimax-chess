@@ -144,7 +144,7 @@ bool __ifIsCheckedSetLastMoveToCheck(Tboard *b)
 }
 
 
-void printDetailedMoveScheme(const Tboard *b, int depth)
+void printDetailedMoveScheme(Tboard *b, int depth)
 {
   if(depth <= 0){
     return;
