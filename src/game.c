@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 
 //clearScreen() clears screen only if this variable is true 
 bool isClearScreenActive = true;
@@ -256,7 +257,7 @@ int humanGetMove(Tboard *b, char *input, int _)
     if(isInputHintable(input)){
       //if is it's move
       if((b->move%2 == 0) ==
-         (isLower(b->pieces['8' - input[1]][input[0]-'A']))){
+         (islower(b->pieces['8' - input[1]][input[0]-'A']))){
 
         TmoveList* hints = initMoveList(2);
         generateHints(b, input, hints);
@@ -394,7 +395,7 @@ void toUpper(char* s)
 {
   int len = strlen(s);
   for(int i = 0; i < len; i++){
-    if(isLower(s[i])){
+    if(islower(s[i])){
       s[i] = s[i] + ('A' - 'a');
     }
   }

@@ -249,19 +249,64 @@ bool isMoveClean(const Tboard* b, const int pos[2],
 void getPieceLocation(const Tboard* b, const char piece, int location[2]);
 
 /**
+ * returns true if deleting piece causes check to king of deleted pieces color
  * 
+ * @param b pointer to board 
+ * @param oppColor color of opponent ['A' | 'a']
+ * @param pos array of two integers representing
+ *        position of potentialy blocking
+ * @param kingPos array of two integers representing
+ *        position of king
+ * 
+ * @return true if piece blocks check, else false
+ */
+bool isBlockingCheck(const Tboard* b, const char oppColor,
+                     const int pos[2], const int kingPos[2]);
+
+/**
+ * returns true if there is nobody attacking king after move
+ * 
+ * @param b pointer to board
+ * @param move string representing move (ex. E2E4, E7E8r)
+ * @param kingPos array of two integers representing
+ *        position of king under attack
  * 
  */
-bool isBlockingCheck(const Tboard* b, const char, const int[2], const int[2]);
 bool doesMoveBlockCheck(const Tboard* b, const char *move,
                         const int kingPos[2]);
+
+/**
+ * disables casteling and returns past csteling ability to buffer
+ * 
+ * @param b pointer to board
+ * @param color color of player. His casteling gets disabled.
+ * @param buffer gets filled by ability before disabling (left, right)
+ */
 void disableCastling(Tboard *b, char color, bool buffer[2]);
+
+/**
+ * regains casteling to be same as buffer
+ * 
+ * @param b pointer to board
+ * @param color color of player. He regains castling ability.
+ * @param buffer castling ability is set to values in buffer (left, right)
+ */
 void regainCastling(Tboard *b, char color, bool buffer[2]);
 
+/**
+ * returns opposite color  
+ * 'a' -> 'A'  
+ * 'A' -> 'a'  
+ * other inputs have undefined outputs
+ */
 char oppositeColor(const char color);
+
+/**
+ * returns true if color<=piece<=color+32, else false
+ */
 bool isColor(const char color, const char piece);
-bool isUpper(const char);
-bool isLower(const char);
+
+
 void freeArrayOfStrings(char **arr, int len);
 bool isArrayInArrayOfArrays(int *array, int **arrayOfArrays,
                             int ArrLen, int ArrOfArrsLen);

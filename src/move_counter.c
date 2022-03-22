@@ -134,8 +134,8 @@ bool __ifIsCheckedSetLastMoveToCheck(Tboard *b)
                                     '8' - j,
                                     '\0'});
       if(gotChecked(b, kingPos)){
-        if(!((king == 'k' && isLower(b->pieces[j][i])) ||
-           (king == 'K' && isUpper(b->pieces[j][i])))){
+        if(!((king == 'k' && islower(b->pieces[j][i])) ||
+           (king == 'K' && isupper(b->pieces[j][i])))){
             free(lastMoveBackup);
             return true;
         }

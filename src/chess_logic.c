@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 
 
@@ -352,7 +353,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
   char col = 'A' + pos[0];  // 'A'..'H'
 
   char color = 'a';
-  if(isUpper(b->pieces[pos[1]][pos[0]])) color = 'A';
+  if(isupper(b->pieces[pos[1]][pos[0]])) color = 'A';
 
   int kingPos[2];
   getPieceLocation(b, color + 10, kingPos);
@@ -506,7 +507,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         int positionBuffer[2] = {pos[0] + moveVector[0],
                                  pos[1] + moveVector[1]};
         while(isOnBoard(positionBuffer)){
-          if(isLower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+          if(islower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
           appendMoveList(ml, (char[]){col,
                                       row,
@@ -532,7 +533,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         int positionBuffer[2] = {pos[0] + moveVector[0],
                                  pos[1] + moveVector[1]};
         while(isOnBoard(positionBuffer)){
-          if(isUpper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+          if(isupper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
           appendMoveList(ml, (char[]){col,
                                       row,
@@ -558,7 +559,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         int positionBuffer[2] = {pos[0] + moveVector[0],
                                  pos[1] + moveVector[1]};
         while(isOnBoard(positionBuffer)){
-          if(isLower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+          if(islower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
           appendMoveList(ml, (char[]){col,
                                       row,
@@ -584,7 +585,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         int positionBuffer[2] = {pos[0] + moveVector[0],
                                  pos[1] + moveVector[1]};
         while(isOnBoard(positionBuffer)){
-          if(isUpper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+          if(isupper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
           appendMoveList(ml, (char[]){col,
                                       row,
@@ -611,7 +612,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         int positionBuffer[2] = {pos[0] + moveVector[0],
                                  pos[1] + moveVector[1]};
         while(isOnBoard(positionBuffer)){
-          if(isLower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+          if(islower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
           appendMoveList(ml, (char[]){col,
                                       row,
@@ -635,7 +636,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         int positionBuffer[2] = {pos[0] + moveVector[0],
                                  pos[1] + moveVector[1]};
         while(isOnBoard(positionBuffer)){
-          if(isLower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+          if(islower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
           appendMoveList(ml, (char[]){col,
                                       row,
@@ -662,7 +663,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         int positionBuffer[2] = {pos[0] + moveVector[0],
                                  pos[1] + moveVector[1]};
         while(isOnBoard(positionBuffer)){
-          if(isUpper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+          if(isupper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
           appendMoveList(ml, (char[]){col,
                                       row,
@@ -686,7 +687,7 @@ void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml)
         int positionBuffer[2] = {pos[0] + moveVector[0],
                                  pos[1] + moveVector[1]};
         while(isOnBoard(positionBuffer)){
-          if(isUpper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+          if(isupper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
           appendMoveList(ml, (char[]){col,
                                       row,
@@ -1390,7 +1391,7 @@ bool isAttacked(const Tboard *b, const char oppColor, const int dest[2])
           return true;
 
       while(isOnBoard(positionBuffer)){
-        if(isUpper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+        if(isupper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
         if(b->pieces[positionBuffer[1]][positionBuffer[0]] == 'b' ||
            b->pieces[positionBuffer[1]][positionBuffer[0]] == 'q')
@@ -1413,7 +1414,7 @@ bool isAttacked(const Tboard *b, const char oppColor, const int dest[2])
           return true;
 
       while(isOnBoard(positionBuffer)){
-        if(isLower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+        if(islower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
         if(b->pieces[positionBuffer[1]][positionBuffer[0]] == 'B' ||
            b->pieces[positionBuffer[1]][positionBuffer[0]] == 'Q')
@@ -1439,7 +1440,7 @@ bool isAttacked(const Tboard *b, const char oppColor, const int dest[2])
           return true;
 
       while(isOnBoard(positionBuffer)){
-        if(isUpper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+        if(isupper(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
         if(b->pieces[positionBuffer[1]][positionBuffer[0]] == 'r' ||
            b->pieces[positionBuffer[1]][positionBuffer[0]] == 'q')
@@ -1462,7 +1463,7 @@ bool isAttacked(const Tboard *b, const char oppColor, const int dest[2])
           return true;
 
       while(isOnBoard(positionBuffer)){
-        if(isLower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
+        if(islower(b->pieces[positionBuffer[1]][positionBuffer[0]])) break;
 
         if(b->pieces[positionBuffer[1]][positionBuffer[0]] == 'R' ||
            b->pieces[positionBuffer[1]][positionBuffer[0]] == 'Q')
@@ -1534,18 +1535,6 @@ char oppositeColor(const char color)
 bool isColor(const char color, const char piece)
 {
   return (piece >= color && piece <= color + 32);
-}
-
-
-bool isUpper(const char piece)
-{
-  return (piece >= 'A' && piece <= 'Z');
-}
-
-
-bool isLower(const char piece)
-{
-  return (piece >= 'a' && piece <= 'z');
 }
 
 
