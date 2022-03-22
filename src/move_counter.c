@@ -31,13 +31,11 @@ int moveCounterMain(bool debugMode)
   __ifIsCheckedSetLastMoveToCheck(b);
 
   printBoard(b);
-
   printf("FEN:\n%s\n", position);
 
   int maxDepth = 0;
   printf("depth of search:\n");
   scanf("%d", &maxDepth);
-  printf("%d\n", maxDepth);
 
   if(debugMode){
     char *inputMove = calloc(MAX_INP_LEN, sizeof(char));
@@ -115,9 +113,6 @@ long countMoves(Tboard *b, int depth){
 
 bool __ifIsCheckedSetLastMoveToCheck(Tboard *b)
 {
-  char *lastMoveBackup = malloc(MAX_INP_LEN * sizeof(char));
-  strcpy(lastMoveBackup, b->lastMove);
-
   char king = 'k';
   if(b->move%2 == 1){
     king = 'K';
@@ -125,33 +120,33 @@ bool __ifIsCheckedSetLastMoveToCheck(Tboard *b)
   int kingPos[2];
   getPieceLocation(b, king, kingPos);
 
+  //if not checked, return false
+  if(!isAttacked(b, king - ('k' - 'a'), kingPos)){
+    return false;
+  }
+  
   for(int i = 0; i < 8; i++){
     for(int j = 0; j < 8; j++){
       
-      strcpy(b->lastMove, (char []){i + 'A',
-                                    '8' - j,
-                                    i + 'A',
-                                    '8' - j,
-                                    '\0'});
-      if(gotChecked(b, kingPos)){
-        if(!((king == 'k' && islower(b->pieces[j][i])) ||
-           (king == 'K' && isupper(b->pieces[j][i])))){
-            free(lastMoveBackup);
-            return true;
+      if(!isColor(king - ('k' - 'a'), b->pieces[i][j])){
+        strcpy(b->lastMove, (char []){j + 'A',
+                                      '8' - i,
+                                      j + 'A',
+                                      '8' - i,
+                                      '\0'});
+        if(gotChecked(b, kingPos)){
+          return true;
         }
       }
     }
   }
-
-  strcpy(b->lastMove, lastMoveBackup);
-  free(lastMoveBackup);
-  return false;
+  return NULL;
 }
 
 
-void printDetailedMoveScheme(Tboard *b, int depth)
+void printDetailedMoveScheme(const Tboard *b, int depth)
 {
-  if(depth == 0){
+  if(depth <= 0){
     return;
   }
 
@@ -166,15 +161,7 @@ void printDetailedMoveScheme(Tboard *b, int depth)
     moveBoard(ml->moves[i], copy);
     long temp = countMoves(copy, depth-1);
 
-    //print ml->move[i], but in lower
-    char *tempMove = malloc(MAX_INP_LEN * sizeof(char));
-    strcpy(tempMove, ml->moves[i]);
-    for(int j = 0; tempMove[j] != '\0'; j++){
-      tempMove[j] = tolower(tempMove[j]);
-    }
-    printf("%s: %ld\n", tempMove, temp);
-    free(tempMove);
-
+    printf("%s: %ld\n", ml->moves[i], temp);
 
     sum += temp;
 

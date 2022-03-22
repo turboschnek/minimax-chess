@@ -18,7 +18,7 @@
 int moveCounterMain(bool debugMode);
 
 /**
- * Counts possible move sequences in given depth
+ * Counts possible move combinations in given depth
  * 
  * @param b initial board position
  * @param depth depth of move tree
@@ -29,8 +29,26 @@ int moveCounterMain(bool debugMode);
  */
 long countMoves(Tboard *b, int depth);
 
+
+/**
+ * sets last move to check (if piece checking king is on pos a1,
+ * lastMove gets set to A1A1)
+ * 
+ * @param b pointer to board
+ * 
+ * @return true if check was found and lastMove was set
+ */
 bool __ifIsCheckedSetLastMoveToCheck(Tboard *b);
 
-void printDetailedMoveScheme(Tboard *b, int depth);
+
+/**
+ * for all possible moves in present position  
+ * prints possible move combinations in given depth
+ * 
+ * @param b pointer to board
+ * @param depth depth of search
+ * 
+ */
+void printDetailedMoveScheme(const Tboard *b, int depth);
 
 #endif
