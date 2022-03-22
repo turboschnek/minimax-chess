@@ -1276,20 +1276,23 @@ bool isBlockingCheck(const Tboard* b,
                            kingPos[1] + moveVector[1]};
   bool inLineWithKing = false;
   while(isOnBoard(positionBuffer)){
-    if(((b->pieces[positionBuffer[1]]
+    if(inLineWithKing &&
+       ((b->pieces[positionBuffer[1]]
                   [positionBuffer[0]] == (attacker - 'a') + oppColor) ||
         (b->pieces[positionBuffer[1]]
-                  [positionBuffer[0]] == ('q' - 'a') + oppColor)) &&
-        inLineWithKing) return true;
+                  [positionBuffer[0]] == ('q' - 'a') + oppColor)))
+      return true;
 
-    if(b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ' &&
-        inLineWithKing) break;
+    if(inLineWithKing &&
+       b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ')
+        break;
 
     if(positionBuffer[0] == pos[0] &&
         positionBuffer[1] == pos[1]) inLineWithKing = true;
 
-    if(b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ' &&
-        !inLineWithKing) break;
+    if(!inLineWithKing &&
+       b->pieces[positionBuffer[1]][positionBuffer[0]] != ' ')
+        break;
 
     positionBuffer[0] = positionBuffer[0] + moveVector[0];
     positionBuffer[1] = positionBuffer[1] + moveVector[1];
