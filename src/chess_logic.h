@@ -13,17 +13,31 @@
 #include <stdbool.h>
 
 
-// constants
+/**
+ * constants
+ */
+
+//almost infinite number
 #define INF 1000000000
-#define MAX_BORING_MOVES 100
+
+// this is for https://en.wikipedia.org/wiki/Fifty-move_rule
+#define MAX_BORING_MOVES 100  
+ 
 
 
+/**
+ * functions for colored terminal output
+ */
 
-//functions for colored terminal output
+// yellow background
 #define LIGHT(string) "\x1b[43m" string "\x1b[0m"
+// purple background
 #define DARK(string) "\x1b[45m" string "\x1b[0m"
+// cyan background
 #define LIGHT_HINT(string) "\x1b[46m" string "\x1b[0m"
+// blue background
 #define DARK_HINT(string) "\x1b[44m" string "\x1b[0m"
+// black foreground
 #define BLACK_FOREGROUND(string) "\x1b[30m" string
 
 /**
@@ -288,7 +302,7 @@ void disableCastling(Tboard *b, char color, bool buffer[2]);
  * regains casteling to be same as buffer
  * 
  * @param b pointer to board
- * @param color color of player. He regains castling ability.
+ * @param color color of player ['a' | 'A']. He regains castling ability.
  * @param buffer castling ability is set to values in buffer (left, right)
  */
 void regainCastling(Tboard *b, char color, bool buffer[2]);
@@ -356,9 +370,27 @@ bool fitsRestriction(const int moveVector[2], int restriction);
 /**
  * returns true if piece at pos is attacked
  * 
- * 
+ * @param b pointer to board
+ * @param oppColor color of attacking pieces ['a' | 'A']
+ * @param pos array of two integers representing
+ *        position of potentially attacked piece
+ *
+ * @return true if piece at position is attacked, else false
  */
 bool isAttacked(const Tboard* b, const char oppColor, const int pos[2]);
+
+/**
+ * returns true if piece moving from origin to dest will be attacked
+ * 
+ * @param b pointer to board
+ * @param oppColor color of attacking pieces ['a' | 'A']
+ * @param origin array of two integers representing starting
+ *        position of potentially attacked piece
+ * @param dest array of two integers representing destination
+ *        of potentially attacked piece
+ *
+ * @return true if piece will be under attack at dest, else false
+ */
 bool willBeAttacked(const Tboard *b, const char color, const int origin[2],
                     const int dest[2]);
 
