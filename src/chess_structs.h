@@ -9,15 +9,13 @@
 
 #include <stdbool.h>
 
-
+//length of posString (64 squares + 1 '\0')
 #define POS_STRING_LEN 65
+
+//max length of string representing move + 1 '\0'
 #define MAX_INP_LEN 6
 
 
-/**
- * The main structure of this module.  
- * It has all the data you will ever need for chess games
- */
 typedef struct{
 
   // 2d arrray of pieces
@@ -37,7 +35,8 @@ typedef struct{
   // total number of moves made
   int move;
 
-  // number of moves without take or pawn move (for fifty-move rule)
+  // number of moves without take or pawn move
+  //(for https://en.wikipedia.org/wiki/Fifty-move_rule)
   int boringMoveCount;
 
   // array of boring positions since last unboring move
@@ -99,7 +98,11 @@ void freeBoard(Tboard* b);
 
 
 /**
- * dynamically allocated expandable list of moves
+ * dynamically allocated expandable list of moves  
+ * move notation:  
+ * ex. E2E4, E7E5, F1E2, F7F6, G1F3, D7D6
+ * ex. castlinng: E1G1, E1C1
+ * ex. promotions: E7E8, E7E8r, E7E8n, E7E8b
  */
 typedef struct{
 
