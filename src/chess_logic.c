@@ -1248,13 +1248,6 @@ bool isMoveTake(const Tboard* b,
 }
 
 
-bool isItsMove(const int moveNumber, const char piece)
-{
-  return ((moveNumber%2 == 0 && isLower(piece)) ||
-          (moveNumber%2 == 1 && isUpper(piece)));
-}
-
-
 bool isBlockingCheck(const Tboard* b,
                      const char oppColor,
                      const int pos[2],

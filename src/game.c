@@ -254,7 +254,9 @@ int humanGetMove(Tboard *b, char *input, int _)
 
 
     if(isInputHintable(input)){
-      if(isItsMove(b->move, b->pieces['8' - input[1]][input[0]-'A'])){
+      //if is it's move
+      if((b->move%2 == 0) ==
+         (isLower(b->pieces['8' - input[1]][input[0]-'A']))){
 
         TmoveList* hints = initMoveList(2);
         generateHints(b, input, hints);

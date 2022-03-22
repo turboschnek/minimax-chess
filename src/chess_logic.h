@@ -134,23 +134,124 @@ int getResultFaster(Tboard *b, TmoveList *ml);
  */
 bool isInputValid(const char* input, Tboard* b);
 
-void moveBoard(const char* input, Tboard* b);
-bool isEnPassant(const char* input, const Tboard* b);
+/**
+ * makes move  
+ * 
+ * @param b pointer to board - is moved
+ * @param move string representing move (ex. E2E4, E7E8r)
+ * 
+ * @note avoid sending invalid move
+ */
+void moveBoard(const char* move, Tboard* b);
+
+/**
+ * returns true if move is diagonnaly by pawn and lands on empty square
+ * 
+ * @param b pointer to board
+ * @param move string representing move (ex. E2E4, E7E8r)
+ * 
+ */
+bool isEnPassant(const char* move, const Tboard* b);
+
+/**
+ * returns true if enpassant(pos+moveVector) is legal move
+ * 
+ * @param b pointer to board
+ * @param pos array of two integers representing  
+ *        position of enpassanting pawn (ex. white king initial pos == {7, 4})
+ * @param moveVector array of two integers (pos + moveVector == finalPosition)
+ * @param moveRestriction restricts direction of movement to
+ *        one of the following values:  
+ *        0(no restriction), 1(|), 2(/), 3(-), 4(\)
+ * @param oppColor color of opponent ['A' | 'a']
+ * @param mykingPos array of two integers representing pos of king of
+ * enpassanting pawn
+ */
 bool isEnPassantLegal(const Tboard* b, const int pos[2],
                       const int moveVector[2], int moveRestriction,
                       char oppColor, const int mykingPos[2]);
+
+/**
+ * returns true if both integers are >=0 and <8, else false
+ */
 bool isOnBoard(const int pos[2]);
+
+/**
+ * fills ml with all posible moves of piece at pos
+ */
 void generatePieceMoves(const Tboard* b, const int pos[2], TmoveList* ml);
+
+/**
+ * returns false if knight's move lands on square
+ * occupied by piece of same color or lands outside the board, else true
+ * 
+ * @param b pointer to board
+ * @param color knight color ['A' | 'a']
+ * @param pos array of two integers representing  
+ *        position of knight
+ * @param moveVector array of two integers (pos + moveVector == finalPosition)
+ */
 bool isKnightMovePossible(const Tboard* b, const char color,
                           const int pos[2], const int moveVector[2]);
+
+/**
+ * returns false if king lands on attacked square or square
+ * occupied by piece of same color
+ * 
+ * @param b pointer to board
+ * @param color knight color ['A' | 'a']
+ * @param origin position of king
+ * @param dest destination of king
+ */
 bool isKingMovePossible(const Tboard* b, const char color,
                         const int origin[2], const int dest[2]);
+
+/**
+ * returns true if move fits restriction
+ * and lands on square occupied by opponent's piece and
+ * lands on board
+ * 
+ * @param b pointer to board
+ * @param color moving piece color ['A' | 'a']
+ * @param pos array of two integers representing position of moving piece
+ * @param moveVector array of two integers (pos + moveVector == finalPosition)
+ * @param restriction restricts direction of movement to
+ *        one of the following values:  
+ *        0(no restriction), 1(|), 2(/), 3(-), 4(\)
+ */
 bool isMoveTake(const Tboard* b, const char color, const int pos[2],
                 const int moveVector[2], const int restriction);
+
+/**
+ * returns true if move fits restriction
+ * and lands on empty square and lands on board
+ * 
+ * @param b pointer to board
+ * @param color moving piece color ['A' | 'a']
+ * @param pos array of two integers representing position of moving piece
+ * @param moveVector array of two integers (pos + moveVector == finalPosition)
+ * @param restriction restricts direction of movement to
+ *        one of the following values:  
+ *        0(no restriction), 1(|), 2(/), 3(-), 4(\)
+ */
 bool isMoveClean(const Tboard* b, const int pos[2],
                  const int moveVector[2], const int restriction);
-bool isItsMove(const int move, const char piece);
-void getPieceLocation(const Tboard* b, const char piece, int[2]);
+
+/**
+ * locates piece on board and returns it's location in "location" argument
+ * 
+ * @param b pointer to board
+ * @param piece character representing piece (ex. q, K, p)
+ * @param location this is where location of piece is returned
+ * 
+ * @note if piece is not on board, returns {-1, -1}
+ */
+void getPieceLocation(const Tboard* b, const char piece, int location[2]);
+
+/**
+ * 
+ * 
+ */
 bool isBlockingCheck(const Tboard* b, const char, const int[2], const int[2]);
 bool doesMoveBlockCheck(const Tboard* b, const char *move,
                         const int kingPos[2]);
