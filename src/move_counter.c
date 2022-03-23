@@ -19,7 +19,12 @@ int moveCounterMain(bool debugMode)
   char *position = malloc(100 * sizeof(char));
   printf("insert FEN string:\n");
   
-  fgets(position, 100, stdin);
+  //reads input with spaces
+  if(fgets(position, 100, stdin) == NULL){
+    free(position);
+    printf("invalid FEN string\n");
+    return 1;
+  }
 
   Tboard *b = fenToBoard(position);
   if(b == NULL){
@@ -35,7 +40,10 @@ int moveCounterMain(bool debugMode)
 
   int maxDepth = 0;
   printf("depth of search:\n");
-  scanf("%d", &maxDepth);
+  while(scanf("%d", &maxDepth) != 1){
+    printf("invalid depth of search");
+    printf("depth of search:\n");
+  }
 
   if(debugMode){
     char *inputMove = calloc(MAX_INP_LEN, sizeof(char));
@@ -46,7 +54,10 @@ int moveCounterMain(bool debugMode)
       printf("move to node: (quit to quit)\n");
       
       
-      scanf("%s", inputMove);
+      if(scanf("%5s", inputMove) != 1){
+        printf("invalid move format");
+        return 1;
+      }
       if(strcmp(inputMove, "quit") == 0){
         free(inputMove);
         return 0;
@@ -58,7 +69,10 @@ int moveCounterMain(bool debugMode)
       while(!isInputValid(inputMove, b)){
         printf("invalid input\n");
         printf("move to node: (quit to quit)\n");
-        scanf("%s", inputMove);
+        if(scanf("%5s", inputMove) != 1){
+          printf("invalid move format");
+          return 1;
+        }
         if(strcmp(inputMove, "quit") == 0){
           free(inputMove);
           return 0;
@@ -70,7 +84,10 @@ int moveCounterMain(bool debugMode)
 
       moveBoard(inputMove, b);
       printf("depth of search:\n");
-      scanf("%d", &maxDepth);
+      if(scanf("%d", &maxDepth) != 1){
+        printf("invalid input\n");
+        return 1;
+      }
     }
     free(inputMove);
 

@@ -70,11 +70,16 @@ int game(void)
 
 void choosePlayer(Tplayer *player, const char* playerName)
 {
-  //using this ugly string to be immune to Lord Martinek's buff overflow
-  char *choice = malloc(10 * sizeof(char));
+  char *choice = NULL;
   printf("Choose %s player\n", playerName);
   printf("1 - human\n2 - random bot\n3 - minimax bot\n");
-  scanf("%9s", choice);
+  if(scanf("%ms", &choice) != 1){
+    clearScreen();
+    printf("invalid choice\n");
+    free(choice);
+    choosePlayer(player, playerName);
+    return;
+  }
   if(strlen(choice) > 1){
     strcpy(choice, "_");
   }
@@ -91,8 +96,9 @@ void choosePlayer(Tplayer *player, const char* playerName)
   default:
     clearScreen();
     printf("invalid choice\n");
+    free(choice);
     choosePlayer(player, playerName);
-    break;
+    return;
   }
   free(choice);
 }
@@ -253,7 +259,11 @@ int humanGetMove(Tboard *b, char *input, int _)
     return 0;
   }
 
-  scanf("%s", input);
+  if(scanf("%5s", input) != 1){
+    printf("invalid input\n");
+    strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
+    return 0;
+  }
   toUpper(input);
   while(!isInputValid(input, b)){
 
@@ -261,8 +271,11 @@ int humanGetMove(Tboard *b, char *input, int _)
 
     if(isInputHintable(input)){
       //if is it's move
-      if((b->move%2 == 0) ==
-         (islower(b->pieces['8' - input[1]][input[0]-'A']))){
+      if(((b->move%2 == 0) &&
+          (islower(b->pieces['8' - input[1]][input[0]-'A']))) ||
+         ((b->move%2 == 1) &&
+          (isupper(b->pieces['8' - input[1]][input[0]-'A']))))
+      {
 
         TmoveList* hints = initMoveList(2);
         generateHints(b, input, hints);
@@ -288,7 +301,11 @@ int humanGetMove(Tboard *b, char *input, int _)
       printBoard(b);
     }
 
-    scanf("%s", input);
+    if(scanf("%5s", input) != 1){
+      printf("invalid input\n");
+      strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
+      return 0;
+    }
     toUpper(input);
 
     if (strcmp(input, "END") == 0){
@@ -417,8 +434,7 @@ bool isInputHintable(const char* input)
 void scanTimeBudget(int *timeBudget)
 {
   printf("Enter time limit for minimax bot's move (in seconds):\n");
-  scanf("%d", timeBudget);
-  if(*timeBudget < 0){
+  if((scanf("%d", timeBudget) != 1) || (*timeBudget < 0)){
     clearScreen();
     printf("invalid value, try again\n");
     scanTimeBudget(timeBudget);
