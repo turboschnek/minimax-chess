@@ -9,6 +9,7 @@
 
 #include "chess_logic.h"
 
+//maximal number of pieces needed to make king more vlauable in center of board
 #define ENDGAME_THRESHOLD 15
 
 /**

@@ -15,8 +15,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+
+/**
+ * runs game() from game module
+ */
 int playGame(void);
 
+/**
+ * prints help to stdout
+ */
 void printHelp(void);
 
 
