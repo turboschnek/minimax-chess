@@ -23,7 +23,6 @@ int evaluateBoard(const Tboard *b)
 
 int getPieceValue(char piece, int row, int col, int pieceCount)
 {
-  int temp = 0;
   switch(piece)
   {
   
@@ -33,15 +32,15 @@ int getPieceValue(char piece, int row, int col, int pieceCount)
   case 'k':
     if(pieceCount > ENDGAME_THRESHOLD){
       if(row == 7)
-        temp = 1;
-      return -(temp * abs(35 - (col*10))) / 2;
+        return (abs(35 - (col*10))) / 2;
+      return 0;
     }
-    return ((abs(35 - (col*10)) + abs(35 - (row*10))) / 2);
+    return -((abs(35 - (col*10)) + abs(35 - (row*10))) / 2);
   case 'K':
     if(pieceCount > ENDGAME_THRESHOLD){
       if(row == 0)
-        temp = 1;
-      return -(temp * abs(35 - (col*10))) / 2;
+        return -(abs(35 - (col*10))) / 2;
+      return 0;
     }
     return ((abs(35 - (col*10)) + abs(35 - (row*10))) / 2);
 
