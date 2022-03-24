@@ -4,6 +4,10 @@
  * Year:     2022
  */
 
+//NOTE:
+// I am ignoring the chess terminology definition of "move"
+// My "move" is just one turn (so this: [e4, e5, d3, d6] is four moves)
+
 #ifndef __MODULE_CHESS_STRUCTS_H
 #define __MODULE_CHESS_STRUCTS_H
 
