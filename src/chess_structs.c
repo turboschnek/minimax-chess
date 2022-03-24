@@ -123,6 +123,19 @@ Tboard* fenToBoard(char *fen)
     return NULL;
   }
 
+  //testing if both kings are present
+  bool isKOnBoard = false, iskOnBoard = false;
+  for(int r = 0; r < 8; r++){
+    for(int c = 0; c < 8; c++){
+      iskOnBoard = (b->pieces[r][c] == 'k') || iskOnBoard;
+      isKOnBoard = (b->pieces[r][c] == 'K') || isKOnBoard;
+    }
+  }
+  if(!(iskOnBoard && isKOnBoard)){
+    free(b);
+    return NULL;
+  }
+
 
   index++;
   if(fen[index] == 'w'){
