@@ -76,7 +76,7 @@ int playGame()
 void printHelp()
 {
   const char *options[] = {
-    "-g        -game (default)"
+    "-g        -game (default)",
     "-d        -game with debug mode (disables clear screen)",
     "-c        -count future moves of FEN string",
     "-m        -count future moves made from every moved FEN string",
