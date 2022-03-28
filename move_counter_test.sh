@@ -5,7 +5,7 @@ results=();
 
 if [ "$#" -eq 2 ]; then
 	if [ $2 = "--verbose" ]; then
-		for i in {1..6}; do 
+		for i in {1..7}; do 
 			results+=( "FAILED" );
 			echo "-----------------test$i--------------------";
 			output=$(./chess -c < ../$1/move_counter_test_in$i.txt);
@@ -22,14 +22,14 @@ if [ "$#" -eq 2 ]; then
 		done
 
 		echo "-----------------overview------------------";
-		for i in {1..6}; do 
+		for i in {1..7}; do 
 			echo "test $i: ${results[$i-1]}";
 		done
 		exit 0;
 	fi
 fi
 
-for i in {1..6}; do
+for i in {1..7}; do
 	output=$(./chess -c < ../$1/move_counter_test_in$i.txt);
 	correct=$(tail -5 ../$1/move_counter_test_in$i.txt);
 	tmpa=$(echo "${output}" | tail -1);
