@@ -1050,6 +1050,35 @@ bool gotChecked(const Tboard *b, const int myKingPos[2])
       }
     }
     break;
+
+  case 'k':
+  case 'K':
+    
+    if(b->lastMove[0] == 'E'){
+      
+      int columnUnderAttack = -1;
+
+      if(b->lastMove[2] == 'C'){
+        columnUnderAttack = 3;
+      } else if(b->lastMove[2] == 'G'){
+        columnUnderAttack = 5;
+      } else {
+        break;
+      }
+
+      char attackedPiece = switchCase(b->pieces[attPos[1]][attPos[0]]);
+
+      for(int i = 1; i < 8; i++){
+        if(b->pieces[i][columnUnderAttack] != ' '){
+          if(b->pieces[i][columnUnderAttack] == attackedPiece){
+            return true;
+          } else {
+            break;
+          }
+        }
+      }
+    }
+    break;
   }
 
 
