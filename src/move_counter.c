@@ -35,7 +35,6 @@ int moveCounterMain(bool debugMode)
 
   __ifIsCheckedSetLastMoveToCheck(b);
 
-  printBoard(b);
   printf("FEN:\n%s\n", position);
 
   int maxDepth = 0;
@@ -50,7 +49,6 @@ int moveCounterMain(bool debugMode)
     inputMove[MAX_INP_LEN-1] = '\0';
     while(true){
       printDetailedMoveScheme(b, maxDepth);
-      printBoard(b);
       printf("move to node: (quit to quit)\n");
       
       

@@ -456,3 +456,72 @@ void setIsClearScreenActive(bool isIt)
 {
   isClearScreenActive = isIt;
 }
+
+void printBoard(const Tboard *b)
+{
+  fprintBoard(stdout, b);
+}
+
+void printBoardWithHints(const Tboard* b, TmoveList *hints){
+  fprintBoardWithHints(stdout, b, hints);
+}
+
+void fprintBoard(FILE* file, const Tboard *b)
+{
+  TmoveList *emptyML = initMoveList(0);
+  fprintBoardWithHints(file, b, emptyML);
+  freeMoveList(emptyML);
+}
+
+void fprintBoardWithHints(FILE* file, const Tboard *b, TmoveList *hints)
+{
+  int **hintIndex = malloc(hints->filled * sizeof(int*));
+  for(int i = 0; i < hints->filled; i++) {
+    hintIndex[i] = malloc(2 * sizeof(int));
+    hintIndex[i][0] = hints->moves[i][2]-'A';
+    hintIndex[i][1] = 7- (hints->moves[i][3]-'1');
+  }
+
+  fprintf(file, " ");
+  for (int i = 0; i < 8; i++){
+    fprintf(file, "%c ", 'A'+i);
+  }
+  fprintf(file, "\n");
+
+  for (int i = 0; i < 8; i++){
+    fprintf(file, "%d", 8-i);
+    for (int j = 0; j < 8; j++){
+      int* temp= malloc(2 * sizeof(int));
+      temp[0] = j; temp[1] = i;
+
+      if(isArrayInArrayOfArrays(temp, hintIndex, 2, hints->filled)){
+        if((i + j) % 2 == 1){
+          fprintf(file, DARK_HINT("%s "), getPieceGraphics(b->pieces[i][j]));
+        } else {
+          fprintf(file, LIGHT_HINT("%s "), getPieceGraphics(b->pieces[i][j]));
+        }
+      }
+      else {
+        if((i + j) % 2 == 1){
+          fprintf(file, DARK("%s "), getPieceGraphics(b->pieces[i][j]));
+        } else {
+          fprintf(file, LIGHT("%s "), getPieceGraphics(b->pieces[i][j]));
+        }
+      }
+
+      free(temp);
+    }
+    fprintf(file, "%d\n", 8-i);
+  }
+
+  fprintf(file, " ");
+  for (int i = 0; i < 8; i++){
+    fprintf(file, "%c ", 'A'+i);
+  }
+  fprintf(file, "\n");
+
+  for(int i = 0; i < hints->filled; i++) {
+    free(hintIndex[i]);
+  }
+  free(hintIndex);
+}

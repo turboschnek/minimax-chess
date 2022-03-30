@@ -61,37 +61,6 @@ void generateAllPossibleMoves(Tboard *b, TmoveList* ml);
  */
 void generateHints(Tboard *b, const char *input, TmoveList* ml);
 
-/**
- * prints board using ANSI color codes
- * 
- * @param b pointer to board to be printed
- */
-void printBoard(const Tboard* b);
-
-/**
- * prints board using ANSI color codes, also highlights moves in hint
- * 
- * @param b pointer to board to be printed
- * @param hints pointer to moveList containing hints
- */
-void printBoardWithHints(const Tboard* b, TmoveList *hints);
-
-/**
- * prints board using ANSI color codes
- * 
- * @param f output file
- * @param b pointer to board to be printed
- */
-void fprintBoard(FILE* out, const Tboard* b);
-
-/**
- * prints board using ANSI color codes, also highlights moves in hint
- * 
- * @param f output file
- * @param b pointer to board to be printed
- * @param hints pointer to moveList containing hints
- */
-void fprintBoardWithHints(FILE* out, const Tboard* b, TmoveList *hints);
 
 /**
  * returns unicode string representation of piece
