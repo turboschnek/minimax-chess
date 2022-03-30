@@ -54,10 +54,15 @@ int moveCounterMain(bool debugMode)
       
       if(scanf("%5s", inputMove) != 1){
         printf("invalid move format");
+        free(inputMove);
+        freeBoard(b);
+        free(position);
         return 1;
       }
       if(strcmp(inputMove, "quit") == 0){
         free(inputMove);
+        freeBoard(b);
+        free(position);
         return 0;
       }
       for(int i = 0; i < MAX_INP_LEN-1; i++){
@@ -69,10 +74,15 @@ int moveCounterMain(bool debugMode)
         printf("move to node: (quit to quit)\n");
         if(scanf("%5s", inputMove) != 1){
           printf("invalid move format");
+          free(inputMove);
+          freeBoard(b);
+          free(position);
           return 1;
         }
         if(strcmp(inputMove, "quit") == 0){
           free(inputMove);
+          freeBoard(b);
+          free(position);
           return 0;
         }
         for(int i = 0; i < MAX_INP_LEN-1; i++){
@@ -84,6 +94,9 @@ int moveCounterMain(bool debugMode)
       printf("depth of search:\n");
       if(scanf("%d", &maxDepth) != 1){
         printf("invalid input\n");
+        free(inputMove);
+        freeBoard(b);
+        free(position);
         return 1;
       }
     }
