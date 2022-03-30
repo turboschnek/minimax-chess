@@ -172,6 +172,70 @@ int randomBotGetMove(Tboard* b, char *randomOutput, int _)
   return 0;
 }
 
+int humanGetMove(Tboard *b, char *input, int _)
+{
+  int result = getResult(b);
+  if (result < 2){
+    strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
+    return 0;
+  }
+
+  if(scanf("%5s", input) != 1){
+    printf("invalid input\n");
+    strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
+    return 0;
+  }
+  toUpper(input);
+  while(!isInputValid(input, b)){
+
+
+
+    if(isInputHintable(input)){
+      //if is it's move
+      if(((b->move%2 == 0) &&
+          (islower(b->pieces['8' - input[1]][input[0]-'A']))) ||
+         ((b->move%2 == 1) &&
+          (isupper(b->pieces['8' - input[1]][input[0]-'A']))))
+      {
+
+        TmoveList* hints = initMoveList(2);
+        generateHints(b, input, hints);
+
+        clearScreen();
+        printf("!INVALID MOVE!\nstatic eval: %d\
+               \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
+               evaluateBoard(b), b->move, b->lastMove);
+        printBoardWithHints(b, hints);
+
+        freeMoveList(hints);
+      } else {
+        clearScreen();
+        printf("!INVALID MOVE!\nmoves: %d\nlastMove/depth/time: %s/0/0\n",
+               b->move, b->lastMove);
+        printBoard(b);
+      }
+    }
+    else {
+      clearScreen();
+      printf("!INVALID MOVE!\nmoves: %d\nlastMove/depth/time: %s/0/0\n",
+             b->move, b->lastMove);
+      printBoard(b);
+    }
+
+    if(scanf("%5s", input) != 1){
+      printf("invalid input\n");
+      strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
+      return 0;
+    }
+    toUpper(input);
+
+    if (strcmp(input, "END") == 0){
+      strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
+    }
+  }
+  return 0;
+}
+
 int minimaxBotGetMove(Tboard *b, char *output, int seconds)
 {
   FILE *minimaxDepthFile = fopen("minimax_depth_log.txt", "w");
@@ -249,70 +313,6 @@ int minimaxBotGetMove(Tboard *b, char *output, int seconds)
   fclose(minimaxDepthFile);
 
   return depth+1;
-}
-
-int humanGetMove(Tboard *b, char *input, int _)
-{
-  int result = getResult(b);
-  if (result < 2){
-    strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
-    return 0;
-  }
-
-  if(scanf("%5s", input) != 1){
-    printf("invalid input\n");
-    strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
-    return 0;
-  }
-  toUpper(input);
-  while(!isInputValid(input, b)){
-
-
-
-    if(isInputHintable(input)){
-      //if is it's move
-      if(((b->move%2 == 0) &&
-          (islower(b->pieces['8' - input[1]][input[0]-'A']))) ||
-         ((b->move%2 == 1) &&
-          (isupper(b->pieces['8' - input[1]][input[0]-'A']))))
-      {
-
-        TmoveList* hints = initMoveList(2);
-        generateHints(b, input, hints);
-
-        clearScreen();
-        printf("!INVALID MOVE!\nstatic eval: %d\
-               \nmoves: %d\nlastMove/depth/time: %s/0/0\n",
-               evaluateBoard(b), b->move, b->lastMove);
-        printBoardWithHints(b, hints);
-
-        freeMoveList(hints);
-      } else {
-        clearScreen();
-        printf("!INVALID MOVE!\nmoves: %d\nlastMove/depth/time: %s/0/0\n",
-               b->move, b->lastMove);
-        printBoard(b);
-      }
-    }
-    else {
-      clearScreen();
-      printf("!INVALID MOVE!\nmoves: %d\nlastMove/depth/time: %s/0/0\n",
-             b->move, b->lastMove);
-      printBoard(b);
-    }
-
-    if(scanf("%5s", input) != 1){
-      printf("invalid input\n");
-      strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
-      return 0;
-    }
-    toUpper(input);
-
-    if (strcmp(input, "END") == 0){
-      strcpy(input, (char[5]){'n', 'o', 'm', 'o', '\0'});
-    }
-  }
-  return 0;
 }
 
 int minimax(Tboard *b, int depth, bool isMax, int alfa, int beta)
