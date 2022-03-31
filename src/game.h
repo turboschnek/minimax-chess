@@ -65,12 +65,13 @@ void choosePlayer(Tplayer *player, const char* playerName);
  * @param b initialized board (remains constant),
  * @param white pointer to player function for white
  * @param black pointer to player function for black
- * @param timeBudget time in seconds allowed for minimax's move
- * (if negative then timeBudget = abs(timeBudget))
+ * @param whiteTimeBudget time in seconds allowed for white minimax's move
+ * @param blackTimeBudget time in seconds allowed for black minimax's move
  * 
  * @return 0 for draw or 1 for win of white or -1 for win of black
  */
-int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget);
+int gameLoop(Tboard* b, Tplayer white, Tplayer black,
+             int whiteTimeBudget, int blackTimeBudget);
 
 /**
  * Asks user for move and validates it.
@@ -158,8 +159,12 @@ void toUpper(char*);
 
 /**
  * gets time for minimax bot's move from user
+ * 
+ * @param identifier this is printed as name of minimax bot
+ * @param timeBudget returns scanned value
+ *
  */
-void scanTimeBudget(int *timeBudget);
+void scanTimeBudget(int *timeBudget, char* identifier);
 
 /**
  * returns true for inputs of len>=2 where input[0] and input[1]

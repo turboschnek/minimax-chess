@@ -22,7 +22,7 @@ bool isClearScreenActive = true;
 
 int game(void)
 {
-  int timeBudget = 0;
+  int whiteTimeBudget = 0, blackTimeBudget = 0;
   
   Tplayer white;
   Tplayer black;
@@ -32,8 +32,13 @@ int game(void)
   clearScreen();
 
   
-  if(black == minimaxBotGetMove || white == minimaxBotGetMove){
-    scanTimeBudget(&timeBudget);
+  if(black == minimaxBotGetMove){
+    scanTimeBudget(&blackTimeBudget, "black");
+    clearScreen();
+  }
+
+  if(white == minimaxBotGetMove){
+    scanTimeBudget(&whiteTimeBudget, "white");
     clearScreen();
   }
 
@@ -44,7 +49,7 @@ int game(void)
 
   int result = 2;
 
-  result = gameLoop(b, white, black, timeBudget);
+  result = gameLoop(b, white, black, whiteTimeBudget, blackTimeBudget);
 
   freeBoard(b);
 
@@ -104,13 +109,9 @@ void choosePlayer(Tplayer *player, const char* playerName)
 }
 
 
-int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
+int gameLoop(Tboard* b, Tplayer white, Tplayer black,
+             int whiteTimeBudget, int blackTimeBudget)
 {
-  if(timeBudget < 0){
-    timeBudget = abs(timeBudget);
-  }
-
-
   FILE *gameSave = fopen("game_log.txt", "w");
   char *moveBuffer = malloc(MAX_INP_LEN * sizeof(char));
   int result = 2;
@@ -120,7 +121,7 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
       //whites move:
       time_t seconds;
       seconds = time(NULL);
-      int depth = white(b, moveBuffer, timeBudget);
+      int depth = white(b, moveBuffer, whiteTimeBudget);
       seconds = time(NULL) - seconds;
 
       moveBoard(moveBuffer, b);
@@ -135,7 +136,7 @@ int gameLoop(Tboard* b, Tplayer white, Tplayer black, int timeBudget)
       //blacks move:
       time_t seconds;
       seconds = time(NULL);
-      int depth = black(b, moveBuffer, timeBudget);
+      int depth = black(b, moveBuffer, blackTimeBudget);
       seconds = time(NULL) - seconds;
 
       moveBoard(moveBuffer, b);
@@ -431,13 +432,14 @@ bool isInputHintable(const char* input)
   return false;
 }
 
-void scanTimeBudget(int *timeBudget)
+void scanTimeBudget(int *timeBudget, char* identifier)
 {
-  printf("Enter time limit for minimax bot's move (in seconds):\n");
+  printf("Enter time limit for %s bot's move (in seconds):\n",
+         identifier);
   if((scanf("%d", timeBudget) != 1) || (*timeBudget < 0)){
     clearScreen();
     printf("invalid value, try again\n");
-    scanTimeBudget(timeBudget);
+    scanTimeBudget(timeBudget, identifier);
   }
 }
 
