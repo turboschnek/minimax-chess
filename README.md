@@ -1,4 +1,4 @@
-# project_chess
+# minimax-chess
 linux only
 
 Maturitni projekt GVID
